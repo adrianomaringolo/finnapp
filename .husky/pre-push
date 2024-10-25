@@ -6,7 +6,7 @@
 # which are not under our control, e.g. ./rel script calls
 if [ -z "${NO_HOOKS}" ]; then
   # npm run test && 
-  npx react-scripts build
+  npm run build
 else
   echo Skipping git hook: pre-push
 fi
