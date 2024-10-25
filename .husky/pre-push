@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+
+# next command is to deal with git calls,
+# which are not under our control, e.g. ./rel script calls
+if [ -z "${NO_HOOKS}" ]; then
+  # npm run test && 
+  npx react-scripts build
+else
+  echo Skipping git hook: pre-push
+fi
+
