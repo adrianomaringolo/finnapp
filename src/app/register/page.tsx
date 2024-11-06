@@ -1,6 +1,9 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import { app } from '../../firebase'
@@ -18,7 +21,7 @@ export default function Register() {
 		setError('')
 
 		if (password !== confirmation) {
-			setError("Passwords don't match")
+			setError('As senhas não coincidem')
 			return
 		}
 
@@ -32,22 +35,21 @@ export default function Register() {
 
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-center p-8">
-			<div className="max-w-4xl mx-auto p-6">
-				<div className="text-center mb-16">
-					<a href="javascript:void(0)">
-						<img
-							src="https://readymadeui.com/readymadeui.svg"
-							alt="logo"
-							className="w-52 inline-block"
-						/>
-					</a>
-					<h4 className="text-gray-800 text-base font-semibold mt-6">
-						Sign up into your account
-					</h4>
+			<div className="w-96 mx-auto p-6">
+				<div className="flex flex-col items-center text-center mb-8">
+					<Image
+						src="/finnapp-logo.png"
+						alt="FinnApp"
+						width={100}
+						height={100}
+						className="mb-4"
+					/>
+
+					<h4 className="text-gray-800 text-base font-semibold">Registre sua conta</h4>
 				</div>
 
 				<form onSubmit={handleSubmit} className="md:w-full">
-					<div className="grid gap-8">
+					<div className="grid gap-4">
 						<div>
 							<label className="text-gray-800 text-sm mb-2 block">Email</label>
 							<input
@@ -56,31 +58,41 @@ export default function Register() {
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 								className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all"
-								placeholder="Enter email"
+								placeholder="Informe seu email"
 							/>
 						</div>
 
 						<div>
-							<label className="text-gray-800 text-sm mb-2 block">Password</label>
+							<label className="text-gray-800 text-sm mb-2 block">Senha</label>
 							<input
 								name="password"
 								type="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all"
-								placeholder="Enter password"
+								placeholder="Informe sua senha"
 							/>
 						</div>
 						<div>
-							<label className="text-gray-800 text-sm mb-2 block">Confirm Password</label>
+							<label className="text-gray-800 text-sm mb-2 block">Confirmação</label>
 							<input
 								name="cpassword"
 								type="password"
 								value={confirmation}
 								onChange={(e) => setConfirmation(e.target.value)}
 								className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all"
-								placeholder="Enter confirm password"
+								placeholder="Confirme sua senha"
 							/>
+						</div>
+
+						<div className="flex items-center gap-2">
+							<input
+								type="checkbox"
+								id="agreement"
+								name="remember-me"
+								className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+							/>
+							<label htmlFor="agreement">Concordo com os termos</label>
 						</div>
 					</div>
 
@@ -94,14 +106,14 @@ export default function Register() {
 					)}
 
 					<div className="!mt-12">
-						<button
-							type="button"
-							className="py-3.5 px-7 text-sm font-semibold tracking-wider rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
-						>
-							Sign up
-						</button>
+						<Button size="lg" type="submit" className="w-full">
+							Registrar
+						</Button>
 					</div>
 				</form>
+				<Button variant="link" className="w-full" asChild>
+					<Link href="/login">Voltar para login</Link>
+				</Button>
 			</div>
 		</main>
 	)
