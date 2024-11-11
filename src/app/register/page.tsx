@@ -1,6 +1,10 @@
 'use client'
 
+import { PasswordInputComponent } from '@/components/password-input'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -38,8 +42,8 @@ export default function Register() {
 			<div className="w-96 mx-auto p-6">
 				<div className="flex flex-col items-center text-center mb-8">
 					<Image
-						src="/finnapp-logo.png"
-						alt="FinnApp"
+						src="/logo.png"
+						alt="Amigo do Bolso"
 						width={100}
 						height={100}
 						className="mb-4"
@@ -52,47 +56,42 @@ export default function Register() {
 					<div className="grid gap-4">
 						<div>
 							<label className="text-gray-800 text-sm mb-2 block">Email</label>
-							<input
+							<Input
 								name="email"
 								type="text"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
-								className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all"
 								placeholder="Informe seu email"
 							/>
 						</div>
 
 						<div>
 							<label className="text-gray-800 text-sm mb-2 block">Senha</label>
-							<input
+							<PasswordInputComponent
 								name="password"
-								type="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all"
 								placeholder="Informe sua senha"
 							/>
 						</div>
 						<div>
 							<label className="text-gray-800 text-sm mb-2 block">Confirmação</label>
-							<input
+							<Input
 								name="cpassword"
 								type="password"
 								value={confirmation}
 								onChange={(e) => setConfirmation(e.target.value)}
-								className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3.5 rounded-md focus:bg-transparent outline-blue-500 transition-all"
 								placeholder="Confirme sua senha"
 							/>
 						</div>
 
 						<div className="flex items-center gap-2">
-							<input
-								type="checkbox"
+							<Checkbox
 								id="agreement"
 								name="remember-me"
 								className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
 							/>
-							<label htmlFor="agreement">Concordo com os termos</label>
+							<Label htmlFor="agreement">Concordo com os termos</Label>
 						</div>
 					</div>
 

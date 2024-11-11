@@ -1,6 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
 	getAuth,
 	GoogleAuthProvider,
@@ -65,8 +68,8 @@ export default function Login() {
 			<div className="grid md:grid-cols-2 items-center gap-10 max-w-6xl w-full">
 				<div>
 					<Image
-						src="/finnapp-logo.png"
-						alt="FinnApp"
+						src="/logo.png"
+						alt={`Logo ${process.env.NEXT_PUBLIC_APP_NAME}`}
 						width={100}
 						height={100}
 						className="mb-4"
@@ -75,9 +78,10 @@ export default function Login() {
 						Controle suas finanças de forma simples e eficiente
 					</h2>
 					<p className="text-sm mt-6 text-gray-800">
-						Com o FinnApp você pode controlar suas finanças de forma simples e eficiente.
-						Com ele você pode adicionar, editar e excluir transações, categorias e contas
-						e ter uma clara visão de como está sua situação financeira.
+						Com o {process.env.NEXT_PUBLIC_APP_NAME} você pode controlar suas finanças de
+						forma simples e eficiente. Com ele você pode adicionar, editar e excluir
+						transações, categorias e contas e ter uma clara visão de como está sua
+						situação financeira.
 					</p>
 					<p className="mt-5 text-sm font-light text-gray-500 dark:text-gray-400">
 						Não tem uma conta?{' '}
@@ -94,41 +98,34 @@ export default function Login() {
 					<h3 className="text-gray-800 text-3xl font-extrabold mb-8">Acesse</h3>
 
 					<div className="space-y-4">
-						<div>
-							<input
-								name="email"
-								type="email"
-								autoComplete="email"
-								required
-								className="bg-gray-100 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-blue-600 focus:bg-transparent"
-								placeholder="Endereço de email"
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-							/>
-						</div>
-						<div>
-							<input
-								name="password"
-								type="password"
-								autoComplete="current-password"
-								required
-								className="bg-gray-100 w-full text-sm text-gray-800 px-4 py-3.5 rounded-md outline-blue-600 focus:bg-transparent"
-								placeholder="Senha"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-						</div>
+						<Input
+							sizing="lg"
+							name="email"
+							type="email"
+							autoComplete="email"
+							required
+							placeholder="Endereço de email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+
+						<Input
+							sizing="lg"
+							name="password"
+							type="password"
+							autoComplete="current-password"
+							required
+							placeholder="Senha"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						/>
+
 						<div className="flex flex-wrap items-center justify-between gap-4">
 							<div className="flex items-center">
-								<input
-									id="remember-me"
-									name="remember-me"
-									type="checkbox"
-									className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-								/>
-								<label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
+								<Checkbox id="remember-me" name="remember-me" />
+								<Label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
 									Lembre de mim
-								</label>
+								</Label>
 							</div>
 							<div className="text-sm">
 								<a
