@@ -19,12 +19,15 @@ export function FooterComponent() {
 						<h3 className="text-lg font-semibold">Links rápidos</h3>
 						<ul className="space-y-2">
 							<li>
-								<Link href="#" className="text-sm hover:text-gray-900">
+								<Link href="/termos-de-uso" className="text-sm hover:text-gray-900">
 									Termos de uso
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="text-sm hover:text-gray-900">
+								<Link
+									href="/politica-de-privacidade"
+									className="text-sm hover:text-gray-900"
+								>
 									Política de privacidade
 								</Link>
 							</li>
