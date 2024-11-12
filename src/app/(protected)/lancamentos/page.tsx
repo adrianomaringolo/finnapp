@@ -1,6 +1,10 @@
 'use client'
 
-import { Month, MonthYearNavigatorComponent } from '@/components/month-year-navigator'
+import { FinancialTracker } from '@/components/financial/financial-tracker'
+import {
+	Month,
+	MonthYearNavigatorComponent,
+} from '@/components/navigation/month-year-navigator'
 import { useState } from 'react'
 
 export default function Entries() {
@@ -9,14 +13,18 @@ export default function Entries() {
 
 	return (
 		<div>
-			<MonthYearNavigatorComponent
-				currentMonth={currentMonth}
-				currentYear={currentYear}
-				onChangeMonthYear={(month, year) => {
-					setCurrentMonth(month)
-					setCurrentYear(year)
-				}}
-			/>
+			<div className="rounded-xl bg-gray-100 py-2 px-4">
+				<MonthYearNavigatorComponent
+					currentMonth={currentMonth}
+					currentYear={currentYear}
+					onChangeMonthYear={(month, year) => {
+						setCurrentMonth(month)
+						setCurrentYear(year)
+					}}
+				/>
+			</div>
+
+			<FinancialTracker />
 		</div>
 	)
 }

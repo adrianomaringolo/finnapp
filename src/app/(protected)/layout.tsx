@@ -1,5 +1,5 @@
-import { FooterComponent } from '@/components/footer'
-import { ResponsiveNav } from '@/components/responsive-nav'
+import { FooterComponent } from '@/components/navigation/footer'
+import { ResponsiveNav } from '@/components/navigation/responsive-nav'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	return (
