@@ -4,12 +4,12 @@ import { Transaction } from './financial.types'
 
 export const MonthSummary = ({ transactions }: { transactions: Transaction[] }) => {
 	const income = transactions
-		.filter((t) => t.type === 'income')
-		.reduce((acc, curr) => acc + (curr.amount || 0), 0)
+		.filter((t) => t.amount > 0)
+		.reduce((acc, curr) => acc + curr.amount, 0)
 
 	const expenses = transactions
-		.filter((t) => t.type !== 'income')
-		.reduce((acc, curr) => acc + (curr.amount || 0), 0)
+		.filter((t) => t.amount <= 0)
+		.reduce((acc, curr) => acc - curr.amount, 0)
 
 	const total = income - expenses
 

@@ -12,11 +12,12 @@ export interface DayGroupProps {
 
 export const DayGroup = ({ previousAmount, date, transactions }: DayGroupProps) => {
 	const balance = transactions.reduce(
-		(acc, curr) => (curr.amount > 0 ? acc + curr.amount : acc - curr.amount),
+		(acc, curr) =>
+			curr.amount > 0 ? acc + Math.abs(curr.amount) : acc - Math.abs(curr.amount),
 		0,
 	)
 
-	debugger
+	console.log('balance', balance)
 
 	return (
 		<div className="mb-6">
@@ -24,16 +25,18 @@ export const DayGroup = ({ previousAmount, date, transactions }: DayGroupProps) 
 			<Card>
 				<CardContent className="divide-y">
 					{transactions.map((transaction) => (
-						<TransactionItem key={transaction.id} {...transaction} />
+						<TransactionItem
+							key={transaction.id}
+							transaction={transaction}
+							onEdit={() => {}}
+							onRemove={() => {}}
+						/>
 					))}
 				</CardContent>
 			</Card>
 			<div className="flex justify-end mt-2">
 				<span className="text-lg">
-					Saldo do dia:{' '}
-					{formatCurrency(
-						balance > 0 ? previousAmount + balance : previousAmount - balance,
-					)}
+					Saldo do dia: {formatCurrency(previousAmount + balance)}
 				</span>
 			</div>
 		</div>
