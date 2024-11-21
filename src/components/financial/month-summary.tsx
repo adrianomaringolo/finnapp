@@ -1,3 +1,4 @@
+import { FinancialEntry } from '@/lib/types/Entry.type'
 import { formatCurrency } from '@/lib/utils'
 import { Minus, Plus } from 'lucide-react'
 
