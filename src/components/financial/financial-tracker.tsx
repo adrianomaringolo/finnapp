@@ -1,7 +1,17 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog'
 import { groupTransactionsByDate } from '@/lib/utils/groupTransactionsByDate'
+import { Plus } from 'lucide-react'
+import AddTransactionForm from './add-transaction-form'
 import { DayGroup } from './day-group'
 import { Transaction } from './financial.types'
 import { MonthSummary } from './month-summary'
@@ -42,6 +52,20 @@ export function FinancialTracker() {
 
 	return (
 		<div className="max-w-2xl mx-auto p-4 space-y-6">
+			<Dialog modal={false}>
+				<DialogTrigger asChild>
+					<Button className="w-full">
+						<Plus className="w-4 h-4 mr-2" />
+						Adicionar transação
+					</Button>
+				</DialogTrigger>
+				<DialogContent>
+					<DialogHeader className="sr-only">
+						<DialogTitle>Adicionar transação</DialogTitle>
+					</DialogHeader>
+					<AddTransactionForm handleClose={() => {}} />
+				</DialogContent>
+			</Dialog>
 			{groupedTransactions.map(({ date, previousAmount, transactions }) => (
 				<DayGroup
 					key={date}
