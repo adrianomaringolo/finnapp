@@ -8,8 +8,6 @@ import {
 	Sun,
 } from 'lucide-react'
 
-type TransactionType = keyof typeof TransactionTypes
-
 export const AmountTypes = {
 	income: 'income',
 	expanses: 'expanses',

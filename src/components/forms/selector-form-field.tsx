@@ -12,6 +12,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 type SelectorFormFieldProps = {
@@ -23,6 +24,10 @@ type SelectorFormFieldProps = {
 export const SelectorFormField = (props: SelectorFormFieldProps) => {
 	const { label, name, options } = props
 	const form = useFormContext()
+
+	useEffect(() => {
+		form.setValue(name, options[0].value)
+	}, [form, name, options])
 
 	return (
 		<FormField

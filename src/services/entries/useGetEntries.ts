@@ -1,4 +1,5 @@
 import { db } from '@/firebase'
+import { FinancialEntry } from '@/lib/types/Entry.type'
 import { useFirestoreQueryData } from '@react-query-firebase/firestore'
 import { collection, orderBy, query, where } from 'firebase/firestore'
 

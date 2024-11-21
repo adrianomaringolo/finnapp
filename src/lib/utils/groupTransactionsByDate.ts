@@ -1,3 +1,5 @@
+import { FinancialEntry } from '../types/Entry.type'
+
 type GroupedTransaction = {
 	date: string
 	previousAmount: number

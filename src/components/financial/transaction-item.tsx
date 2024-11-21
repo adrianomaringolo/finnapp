@@ -19,6 +19,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog'
+import { FinancialEntry } from '@/lib/types/Entry.type'
 import { formatCurrency } from '@/lib/utils'
 import { BadgeAlert, BadgeCheck, Edit, Trash2 } from 'lucide-react'
 import { TransactionTypes } from './financial.types'

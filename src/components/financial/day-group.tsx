@@ -1,3 +1,4 @@
+import { FinancialEntry } from '@/lib/types/Entry.type'
 import { formatCurrency } from '@/lib/utils'
 import { formatDateAndWeekday } from '@/lib/utils/date'
 import { Card, CardContent } from '../ui/card'

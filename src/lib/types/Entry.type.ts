@@ -1,4 +1,4 @@
-interface FinancialEntry {
+export interface FinancialEntry {
 	id: string
 	amount: number
 	description: string
