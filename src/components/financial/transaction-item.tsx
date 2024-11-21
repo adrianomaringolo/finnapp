@@ -20,11 +20,11 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog'
 import { formatCurrency } from '@/lib/utils'
-import { Check, Edit, Trash2 } from 'lucide-react'
-import { Transaction, TransactionTypes } from './financial.types'
+import { BadgeAlert, BadgeCheck, Edit, Trash2 } from 'lucide-react'
+import { TransactionTypes } from './financial.types'
 
 type TransactionItemProps = {
-	transaction: Transaction
+	transaction: FinancialEntry
 	onEdit: () => void
 	onRemove: () => void
 }
@@ -32,9 +32,9 @@ type TransactionItemProps = {
 export const TransactionItem = (props: TransactionItemProps) => {
 	const { transaction, onEdit, onRemove } = props
 
-	const { type, description, amount } = transaction
+	const { category, description, amount, isCompleted } = transaction
 
-	const typeDefinition = TransactionTypes[type]
+	const typeDefinition = TransactionTypes[category as keyof typeof TransactionTypes]
 	const amountColor = amount > 0 ? 'text-green-500' : 'text-red-500'
 
 	return (
@@ -51,7 +51,11 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						<span className={`text-lg font-medium ${amountColor}`}>
 							{formatCurrency(amount ?? 0)}
 						</span>
-						<Check className="w-5 h-5 text-green-500" />
+						{isCompleted ? (
+							<BadgeCheck className="w-5 h-5 text-green-500" />
+						) : (
+							<BadgeAlert className="w-5 h-5 text-gray-500" />
+						)}
 					</div>
 				</div>
 			</DialogTrigger>

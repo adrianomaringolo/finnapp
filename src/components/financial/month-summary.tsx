@@ -1,8 +1,7 @@
 import { formatCurrency } from '@/lib/utils'
 import { Minus, Plus } from 'lucide-react'
-import { Transaction } from './financial.types'
 
-export const MonthSummary = ({ transactions }: { transactions: Transaction[] }) => {
+export const MonthSummary = ({ transactions }: { transactions: FinancialEntry[] }) => {
 	const income = transactions
 		.filter((t) => t.amount > 0)
 		.reduce((acc, curr) => acc + curr.amount, 0)

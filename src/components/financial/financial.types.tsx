@@ -8,14 +8,6 @@ import {
 	Sun,
 } from 'lucide-react'
 
-export interface Transaction {
-	id: string
-	type: TransactionType
-	description: string
-	amount: number
-	date: string
-}
-
 type TransactionType = keyof typeof TransactionTypes
 
 export const AmountTypes = {

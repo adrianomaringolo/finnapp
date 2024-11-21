@@ -1,6 +1,5 @@
 'use client'
 
-import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 
@@ -15,6 +14,7 @@ import {
 } from '@/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
+import { formatLongDate } from '@/lib/utils/date'
 
 type DateFormFieldProps = {
 	label: string
@@ -41,7 +41,7 @@ export const DateFormField = (props: DateFormFieldProps) => {
 										!field.value && 'text-muted-foreground',
 									)}
 								>
-									{field.value ? format(field.value, 'PPP') : <span>Selecione</span>}
+									{field.value ? formatLongDate(field.value) : <span>Selecione</span>}
 									<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
 								</Button>
 							</FormControl>

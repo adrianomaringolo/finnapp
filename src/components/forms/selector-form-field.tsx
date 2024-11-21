@@ -23,6 +23,7 @@ type SelectorFormFieldProps = {
 export const SelectorFormField = (props: SelectorFormFieldProps) => {
 	const { label, name, options } = props
 	const form = useFormContext()
+
 	return (
 		<FormField
 			control={form.control}
@@ -30,7 +31,7 @@ export const SelectorFormField = (props: SelectorFormFieldProps) => {
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
-					<Select onValueChange={field.onChange} defaultValue={field.value}>
+					<Select onValueChange={field.onChange} defaultValue={options[0].value}>
 						<FormControl>
 							<SelectTrigger>
 								<div className="flex items-center">

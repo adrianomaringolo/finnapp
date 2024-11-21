@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/sonner'
 import { clientConfig, serverConfig } from '@/config'
 import { User } from '@/lib/context/AuthContext'
 import { AuthProvider } from '@/lib/context/AuthProvider'
@@ -118,6 +119,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 			<body>
 				<AuthProvider user={user}>{children}</AuthProvider>
+				<Toaster richColors />
 			</body>
 		</html>
 	)

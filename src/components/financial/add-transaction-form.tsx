@@ -19,10 +19,10 @@ import { Switch } from '@/components/ui/switch'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useAuth } from '@/lib/context/AuthContext'
 import { useAddEntry } from '@/services/entries/useAddEntry'
+import { toast } from 'sonner'
 import { DateFormField } from '../forms/date-form-field'
 import { SelectorFormField } from '../forms/selector-form-field'
 import { TextFormField } from '../forms/text-form-field'
-import { DialogClose, DialogFooter } from '../ui/dialog'
 import { AmountType, AmountTypes, TransactionTypes } from './financial.types'
 
 const formSchema = z.object({
@@ -63,8 +63,13 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const { amount, description, category, notes, date, completed } = values
 
+		const correctAmount =
+			formType === AmountTypes.expanses
+				? -Math.abs(parseFloat(amount))
+				: Math.abs(parseFloat(amount))
+
 		const newTransaction: Omit<FinancialEntry, 'id'> = {
-			amount: parseFloat(amount),
+			amount: correctAmount,
 			description,
 			category,
 			notes,
@@ -76,12 +81,12 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 
 		addEntryMutation.mutate(newTransaction, {
 			onSuccess: () => {
-				//toast.success('A notícia foi criada com sucesso!')
+				toast.success('A transação foi criada com sucesso!')
 				props.handleClose()
 				form.reset()
 			},
 			onError: () => {
-				//toast.success('Não foi possível criar a notícia!')
+				toast.success('Não foi possível criar a transação!')
 			},
 		})
 	}
@@ -95,6 +100,28 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 			}
 		}
 	}
+
+	const getTypeCategories = (type: AmountType) => {
+		return Object.entries(TransactionTypes)
+			.map(([key, value]) => {
+				if (value.type === type) {
+					return {
+						value: key,
+						label: (
+							<>
+								{value.icon}
+								<span>{value.label}</span>
+							</>
+						),
+					}
+				}
+				return undefined
+			})
+			.filter(Boolean) as { value: string; label: string | JSX.Element }[]
+	}
+
+	const expensesCategories = getTypeCategories(AmountTypes.expanses as AmountType)
+	const incomeCategories = getTypeCategories(AmountTypes.income as AmountType)
 
 	return (
 		<div className="w-full max-w-md mx-auto p-6 space-y-6">
@@ -156,19 +183,21 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 
 					<DateFormField label="Data" />
 
-					<SelectorFormField
-						label="Categoria"
-						name="category"
-						options={Object.entries(TransactionTypes).map(([key, value]) => ({
-							value: key,
-							label: (
-								<>
-									{value.icon}
-									<span>{value.label}</span>
-								</>
-							),
-						}))}
-					/>
+					{formType === AmountTypes.expanses ? (
+						<SelectorFormField
+							key={'expanses-category-' + formType}
+							label="Categoria"
+							name="category"
+							options={expensesCategories}
+						/>
+					) : (
+						<SelectorFormField
+							key={'income-category-' + formType}
+							label="Categoria"
+							name="category"
+							options={incomeCategories}
+						/>
+					)}
 
 					<TextFormField mode="textarea" name="notes" label="Observações" />
 
@@ -186,15 +215,10 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 							</FormItem>
 						)}
 					/>
-					<DialogFooter className="sm:justify-start">
-						<DialogClose asChild>
-							<Button type="button" variant="secondary">
-								Close
-							</Button>
-						</DialogClose>
-					</DialogFooter>
+
 					<Button
 						type="submit"
+						size="xl"
 						className={`w-full ${
 							formType === AmountTypes.expanses
 								? 'bg-red-500 hover:bg-red-600'

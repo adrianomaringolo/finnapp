@@ -1,13 +1,11 @@
-import { Transaction } from '@/components/financial/financial.types'
-
 type GroupedTransaction = {
 	date: string
 	previousAmount: number
-	transactions: Transaction[]
+	transactions: FinancialEntry[]
 }
 
 export function groupTransactionsByDate(
-	transactions: Transaction[],
+	transactions: FinancialEntry[],
 ): GroupedTransaction[] {
 	// Sort transactions by date to ensure previous amount is calculated in order
 	const sortedTransactions = [...transactions].sort((a, b) =>

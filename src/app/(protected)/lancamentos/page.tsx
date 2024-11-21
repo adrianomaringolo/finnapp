@@ -24,7 +24,9 @@ export default function Entries() {
 				/>
 			</div>
 
-			<FinancialTracker />
+			<FinancialTracker
+				monthYear={`${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}`}
+			/>
 		</div>
 	)
 }

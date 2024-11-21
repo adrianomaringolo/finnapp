@@ -1,13 +1,12 @@
 import { formatCurrency } from '@/lib/utils'
 import { formatDateAndWeekday } from '@/lib/utils/date'
 import { Card, CardContent } from '../ui/card'
-import { Transaction } from './financial.types'
 import { TransactionItem } from './transaction-item'
 
 export interface DayGroupProps {
 	previousAmount: number
 	date: string
-	transactions: Transaction[]
+	transactions: FinancialEntry[]
 }
 
 export const DayGroup = ({ previousAmount, date, transactions }: DayGroupProps) => {
@@ -16,8 +15,6 @@ export const DayGroup = ({ previousAmount, date, transactions }: DayGroupProps) 
 			curr.amount > 0 ? acc + Math.abs(curr.amount) : acc - Math.abs(curr.amount),
 		0,
 	)
-
-	console.log('balance', balance)
 
 	return (
 		<div className="mb-6">
