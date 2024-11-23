@@ -34,7 +34,7 @@ export const TransactionTypes = {
 	charity: {
 		type: 'expanses',
 		label: 'Fazer pelo outro',
-		icon: <Heart className="w-6 h-6 text-red-500" />,
+		icon: <Heart className="w-6 h-6 text-pink-500" />,
 	},
 	'financial-security': {
 		type: 'expanses',
@@ -44,11 +44,11 @@ export const TransactionTypes = {
 	'long-term': {
 		type: 'expanses',
 		label: 'Compras de longo prazo',
-		icon: <CalendarArrowUp className="w-6 h-6 text-blue-950" />,
+		icon: <CalendarArrowUp className="w-6 h-6 text-blue-600" />,
 	},
 	'personal-growth': {
 		type: 'expanses',
 		label: 'Desenvolvimento pessoal',
-		icon: <GraduationCap className="w-6 h-6 text-gray-800" />,
+		icon: <GraduationCap className="w-6 h-6 text-gray-700" />,
 	},
 }

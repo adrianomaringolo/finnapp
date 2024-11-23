@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { Button } from '@/components/ui/button'
 import {
 	Form,
 	FormControl,
@@ -14,14 +13,15 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useAuth } from '@/lib/context/AuthContext'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { useAddEntry } from '@/services/entries/useAddEntry'
 import { toast } from 'sonner'
+import { CurrencyInput } from '../forms/currency-field'
 import { DateFormField } from '../forms/date-form-field'
+import { LoadButton } from '../forms/load-button'
 import { SelectorFormField } from '../forms/selector-form-field'
 import { TextFormField } from '../forms/text-form-field'
 import { AmountType, AmountTypes, TransactionTypes } from './financial.types'
@@ -162,17 +162,17 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Input
-										type="number"
-										step="0.01"
-										placeholder="0.00"
-										{...field}
+									<CurrencyInput
 										sizing="2xl"
 										className={`${
 											formType === AmountTypes.expanses
 												? 'border-red-500'
 												: 'border-green-500'
 										}`}
+										decimalSeparator=","
+										thousandSeparator="."
+										value={field.value}
+										onValueChange={(value) => field.onChange(value)}
 									/>
 								</FormControl>
 								<FormMessage />
@@ -217,7 +217,7 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 						)}
 					/>
 
-					<Button
+					<LoadButton
 						type="submit"
 						size="xl"
 						className={`w-full ${
@@ -225,9 +225,10 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 								? 'bg-red-500 hover:bg-red-600'
 								: 'bg-green-500 hover:bg-green-600'
 						}`}
+						isLoading={addEntryMutation.isLoading}
 					>
 						Salvar
-					</Button>
+					</LoadButton>
 				</form>
 			</Form>
 		</div>

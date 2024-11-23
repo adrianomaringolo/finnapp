@@ -1,14 +1,3 @@
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
@@ -21,17 +10,17 @@ import {
 } from '@/components/ui/dialog'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { formatCurrency } from '@/lib/utils'
-import { BadgeAlert, BadgeCheck, Edit, Trash2 } from 'lucide-react'
+import { BadgeAlert, BadgeCheck, Edit } from 'lucide-react'
 import { TransactionTypes } from './financial.types'
+import { TransactionItemRemove } from './transaction-item-remove'
 
 type TransactionItemProps = {
 	transaction: FinancialEntry
 	onEdit: () => void
-	onRemove: () => void
 }
 
 export const TransactionItem = (props: TransactionItemProps) => {
-	const { transaction, onEdit, onRemove } = props
+	const { transaction, onEdit } = props
 
 	const { category, description, amount, isCompleted } = transaction
 
@@ -81,27 +70,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						<Edit className="w-4 h-4" />
 						Editar
 					</Button>
-					<AlertDialog>
-						<AlertDialogTrigger asChild>
-							<Button variant="destructive" className="my-1">
-								<Trash2 className="w-4 h-4" />
-								Remover
-							</Button>
-						</AlertDialogTrigger>
-						<AlertDialogContent>
-							<AlertDialogHeader>
-								<AlertDialogTitle>Tem certeza?</AlertDialogTitle>
-								<AlertDialogDescription>
-									Essa ação não pode ser desfeita. Você tem certeza que deseja excluir
-									essa transação?
-								</AlertDialogDescription>
-							</AlertDialogHeader>
-							<AlertDialogFooter>
-								<AlertDialogCancel>Cancelar</AlertDialogCancel>
-								<AlertDialogAction onClick={onRemove}>Excluir</AlertDialogAction>
-							</AlertDialogFooter>
-						</AlertDialogContent>
-					</AlertDialog>
+					<TransactionItemRemove transaction={transaction} />
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
