@@ -27,7 +27,6 @@ export const DayGroup = ({ previousAmount, date, transactions }: DayGroupProps) 
 							key={transaction.id}
 							transaction={transaction}
 							onEdit={() => {}}
-							onRemove={() => {}}
 						/>
 					))}
 				</CardContent>
