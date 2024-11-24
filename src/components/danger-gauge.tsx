@@ -15,7 +15,7 @@ export function DangerGauge(props: DangerGaugeProps) {
 
 	return (
 		<div className="w-full max-w-3xl space-y-2">
-			<h2 className="text-xl font-semibold">{title}</h2>
+			<h2 className="text-xl font-semibold mb-6">{title}</h2>
 			<div className="relative h-7">
 				{/* Background gradient */}
 				<div
@@ -32,16 +32,16 @@ export function DangerGauge(props: DangerGaugeProps) {
 
 				{/* Marker triangle */}
 				<div
-					className="absolute top-0 -mt-2 -ml-2 transform"
-					style={{ left: `${percentage}%` }}
+					className="absolute -top-3 -mt-2 -ml-2 transform"
+					style={percentage < 100 ? { left: `${percentage}%` } : { right: 0 }}
 				>
-					<div
-						className="border-l-[8px] border-r-[8px] border-t-[12px] border-l-transparent border-r-transparent border-t-black"
-						aria-hidden="true"
-					/>
-					<div className="bg-white/70 px-1 rounded text-sm">
+					<div className="bg-black text-white px-1 rounded text-sm">
 						{percentage.toFixed(1).replace('.', ',')}%
 					</div>
+					<div
+						className="w-2 ml-2 border-l-[8px] border-r-[8px] border-t-[12px] border-l-transparent border-r-transparent border-t-black"
+						aria-hidden="true"
+					/>
 				</div>
 				<div className="text-sm absolute right-1 top-1">{maxValue}%</div>
 			</div>
