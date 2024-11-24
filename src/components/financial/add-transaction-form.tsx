@@ -19,7 +19,7 @@ import { useAuth } from '@/lib/context/AuthContext'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { useAddEntry } from '@/services/entries/useAddEntry'
 import { toast } from 'sonner'
-import { CurrencyInput } from '../forms/currency-field'
+import { CurrencyField } from '../forms/currency-field'
 import { DateFormField } from '../forms/date-form-field'
 import { LoadButton } from '../forms/load-button'
 import { SelectorFormField } from '../forms/selector-form-field'
@@ -164,7 +164,7 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<CurrencyInput
+									<CurrencyField
 										sizing="2xl"
 										className={`${
 											formType === AmountTypes.expanses

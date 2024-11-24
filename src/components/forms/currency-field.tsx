@@ -1,14 +1,14 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { Input, InputProps } from '../ui/input'
 
-export interface CurrencyInputProps extends InputProps {
+export interface CurrencyFieldProps extends InputProps {
 	currencySymbol?: string
 	decimalSeparator?: string
 	thousandSeparator?: string
 	onValueChange: (value: number) => void
 }
 
-export const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputProps>(
+const CurrencyField = React.forwardRef<HTMLInputElement, CurrencyFieldProps>(
 	(props, ref) => {
 		const {
 			currencySymbol = 'R$',
@@ -81,8 +81,13 @@ export const CurrencyInput = React.forwardRef<HTMLInputElement, CurrencyInputPro
 				onFocus={handleFocus}
 				onClick={handleFocus} // Ensures that even if the user clicks, the cursor is forced to the end
 				placeholder={`${currencySymbol} 0${decimalSeparator}00`}
+				className={className}
 				{...rest}
 			/>
 		)
 	},
 )
+
+CurrencyField.displayName = 'CurrencyField'
+
+export { CurrencyField }
