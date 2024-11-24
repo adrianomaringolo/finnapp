@@ -39,14 +39,16 @@ const formSchema = z.object({
 })
 
 type AddTransactionFormProps = {
+	monthYear: string
 	handleClose: () => void
 }
 
 export default function AddTransactionForm(props: AddTransactionFormProps) {
+	const { monthYear } = props
 	const { user } = useAuth()
 	const [formType, setFormType] = useState<AmountType>(AmountTypes.expanses as AmountType)
 
-	const addEntryMutation = useAddEntry({ userId: user?.uid as string })
+	const addEntryMutation = useAddEntry({ userId: user?.uid as string, monthYear })
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -172,7 +174,9 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 										decimalSeparator=","
 										thousandSeparator="."
 										value={field.value}
-										onValueChange={(value) => field.onChange(value)}
+										onValueChange={(value) => {
+											field.onChange(value.toString())
+										}}
 									/>
 								</FormControl>
 								<FormMessage />

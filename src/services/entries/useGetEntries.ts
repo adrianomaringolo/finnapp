@@ -1,7 +1,7 @@
 import { db } from '@/firebase'
 import { FinancialEntry } from '@/lib/types/Entry.type'
-import { useFirestoreQueryData } from '@react-query-firebase/firestore'
-import { collection, orderBy, query, where } from 'firebase/firestore'
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
+import { useQuery } from 'react-query'
 
 const COLLECTION = 'entries'
 
@@ -10,27 +10,22 @@ export interface GetEntriesVariables {
 	monthYear: string
 }
 
-export const useGetEntries = (variables: GetEntriesVariables) => {
-	const entriesRef = collection(db, 'users', variables.userId, COLLECTION)
+const fetchEntries = async (userId: string, monthYear: string) => {
+	const entriesRef = collection(db, 'users', userId, COLLECTION)
 
-	const getListsQuery = query(
+	const q = query(
 		entriesRef,
-		where('monthYear', '==', variables.monthYear),
+		where('monthYear', '==', monthYear),
 		orderBy('createdAt', 'desc'),
 	)
 
-	const firestoreQuery = useFirestoreQueryData(
-		[COLLECTION, variables],
-		getListsQuery,
-		{
-			idField: 'id',
-			subscribe: true,
-		},
-		{
-			cacheTime: Infinity,
-			staleTime: Infinity,
-		},
-	)
+	const snapshot = await getDocs(q)
+	return snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as FinancialEntry[]
+}
 
-	return { ...firestoreQuery, data: firestoreQuery.data as FinancialEntry[] }
+export const useGetEntries = (variables: GetEntriesVariables) => {
+	const query = useQuery([COLLECTION, variables], () =>
+		fetchEntries(variables.userId, variables.monthYear),
+	)
+	return { ...query, data: query.data }
 }
