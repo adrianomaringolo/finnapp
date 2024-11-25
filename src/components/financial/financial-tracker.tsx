@@ -11,9 +11,9 @@ import { Plus } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { Skeleton } from '../ui/skeleton'
-import AddTransactionForm from './add-transaction-form'
 import { DayGroup } from './day-group'
 import { MonthSummary } from './month-summary'
+import { TransactionForm } from './transaction-form'
 
 type FinancialTrackerProps = {
 	monthYear: string
@@ -65,7 +65,7 @@ export function FinancialTracker(props: FinancialTrackerProps) {
 						<DialogTitle>Adicionar transação</DialogTitle>
 						<DialogDescription>Adicione os dados da nova transação</DialogDescription>
 					</DialogHeader>
-					<AddTransactionForm
+					<TransactionForm
 						handleClose={() => setIsOpen(false)}
 						monthYear={props.monthYear}
 					/>

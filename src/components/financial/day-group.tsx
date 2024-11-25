@@ -23,11 +23,7 @@ export const DayGroup = ({ previousAmount, date, transactions }: DayGroupProps) 
 			<Card>
 				<CardContent className="divide-y">
 					{transactions.map((transaction) => (
-						<TransactionItem
-							key={transaction.id}
-							transaction={transaction}
-							onEdit={() => {}}
-						/>
+						<TransactionItem key={transaction.id} transaction={transaction} />
 					))}
 				</CardContent>
 			</Card>

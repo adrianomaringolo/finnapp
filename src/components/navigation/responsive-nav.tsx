@@ -28,7 +28,15 @@ import { app } from '@/firebase'
 import { useAuth } from '@/lib/context/AuthContext'
 import { cn } from '@/lib/utils/cn'
 import { getAuth, signOut } from 'firebase/auth'
-import { ChartPie, DollarSign, LogOut, LucideIcon, Menu, User } from 'lucide-react'
+import {
+	ChartPie,
+	DollarSign,
+	HelpCircle,
+	LogOut,
+	LucideIcon,
+	Menu,
+	User,
+} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -140,6 +148,16 @@ export function ResponsiveNav() {
 					</Sheet>
 
 					<div className="flex items-center ml-auto">
+						<Link
+							href="ajuda"
+							className={cn(
+								'block select-none space-y-1 rounded-md p-3 leading-none mr-2',
+								'no-underline outline-none transition-colors hover:bg-accent flex gap-2 items-center',
+								'hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+							)}
+						>
+							<HelpCircle className="h-5 w-5" />
+						</Link>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<Button variant="ghost" className="relative h-8 w-8 rounded-full ">

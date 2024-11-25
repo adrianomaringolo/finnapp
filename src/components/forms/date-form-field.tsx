@@ -15,6 +15,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { formatLongDate } from '@/lib/utils/date'
+import { useState } from 'react'
 
 type DateFormFieldProps = {
 	label: string
@@ -22,6 +23,7 @@ type DateFormFieldProps = {
 
 export const DateFormField = (props: DateFormFieldProps) => {
 	const { label } = props
+	const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
 
 	const form = useFormContext()
 	return (
@@ -31,7 +33,7 @@ export const DateFormField = (props: DateFormFieldProps) => {
 			render={({ field }) => (
 				<FormItem className="flex flex-col">
 					<FormLabel>{label}</FormLabel>
-					<Popover>
+					<Popover open={isDatePickerOpen} onOpenChange={setIsDatePickerOpen}>
 						<PopoverTrigger asChild>
 							<FormControl>
 								<Button
@@ -46,12 +48,14 @@ export const DateFormField = (props: DateFormFieldProps) => {
 								</Button>
 							</FormControl>
 						</PopoverTrigger>
-						<PopoverContent className="w-auto p-0" align="start">
+						<PopoverContent className="w-auto p-0" align="center">
 							<Calendar
 								mode="single"
 								selected={field.value}
-								onSelect={field.onChange}
-								disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+								onSelect={(date) => {
+									field.onChange(date)
+									setIsDatePickerOpen(false)
+								}}
 								initialFocus
 							/>
 						</PopoverContent>

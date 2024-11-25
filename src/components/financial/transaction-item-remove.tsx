@@ -26,6 +26,7 @@ export const TransactionItemRemove = (props: TransactionItemRemoveProps) => {
 
 	const deleteMutation = useDeleteEntry({
 		userId: user?.uid as string,
+		monthYear: transaction.monthYear,
 		entryId: transaction.id,
 	})
 

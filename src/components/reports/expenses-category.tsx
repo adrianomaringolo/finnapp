@@ -38,7 +38,7 @@ export const ExpensesCategoryTotal = (props: ExpensesCategoryTotalProps) => {
 						className="flex justify-between py-4 border-b hover:bg-gray-50"
 					>
 						<div className="flex gap-2">
-							{typeDefinition.icon}
+							{typeDefinition.icon()}
 							{typeDefinition.label}
 						</div>
 						<AmountValue value={total} />

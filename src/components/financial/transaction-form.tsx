@@ -18,6 +18,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useAuth } from '@/lib/context/AuthContext'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { useAddEntry } from '@/services/entries/useAddEntry'
+import { useUpdateEntry } from '@/services/entries/useUpdateEntry'
 import { toast } from 'sonner'
 import { CurrencyField } from '../forms/currency-field'
 import { DateFormField } from '../forms/date-form-field'
@@ -35,31 +36,34 @@ const formSchema = z.object({
 	date: z.date({
 		required_error: 'Please select a date',
 	}),
-	completed: z.boolean().default(false),
+	completed: z.boolean().default(true),
 })
 
-type AddTransactionFormProps = {
+type TransactionFormProps = {
+	transactionToEdit?: FinancialEntry
 	monthYear: string
 	handleClose: () => void
 }
 
-export default function AddTransactionForm(props: AddTransactionFormProps) {
-	const { monthYear } = props
+export const TransactionForm = (props: TransactionFormProps) => {
+	const { monthYear, handleClose, transactionToEdit } = props
 	const { user } = useAuth()
 	const [formType, setFormType] = useState<AmountType>(AmountTypes.expanses as AmountType)
 
 	const addEntryMutation = useAddEntry({ userId: user?.uid as string, monthYear })
+	const editUpdateMutation = useUpdateEntry({ userId: user?.uid as string, monthYear })
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			type: AmountTypes.expanses as AmountType,
-			amount: '',
-			description: '',
-			category: '',
-			notes: '',
-			date: new Date(),
-			completed: false,
+			type:
+				(transactionToEdit?.amount ?? 0) > 0 ? AmountTypes.income : AmountTypes.expanses,
+			amount: Math.abs(transactionToEdit?.amount ?? 0).toString() ?? '',
+			description: transactionToEdit?.description ?? '',
+			category: transactionToEdit?.category ?? '',
+			notes: transactionToEdit?.notes ?? '',
+			date: transactionToEdit?.date ? new Date(transactionToEdit?.date) : new Date(),
+			completed: transactionToEdit?.isCompleted ?? true,
 		},
 	})
 
@@ -82,16 +86,33 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 			monthYear: new Date(date).toISOString().slice(0, 7),
 		}
 
-		addEntryMutation.mutate(newTransaction, {
-			onSuccess: () => {
-				toast.success('A transação foi criada com sucesso!')
-				props.handleClose()
-				form.reset()
-			},
-			onError: () => {
-				toast.success('Não foi possível criar a transação!')
-			},
-		})
+		if (transactionToEdit) {
+			editUpdateMutation.mutate(
+				{ ...transactionToEdit, ...newTransaction },
+				{
+					onSuccess: () => {
+						toast.success('A transação foi atualizada com sucesso!')
+						handleClose()
+						form.reset()
+					},
+					onError: () => {
+						toast.success('Não foi possível atualizar a transação!')
+					},
+				},
+			)
+			return
+		} else {
+			addEntryMutation.mutate(newTransaction, {
+				onSuccess: () => {
+					toast.success('A transação foi criada com sucesso!')
+					handleClose()
+					form.reset()
+				},
+				onError: () => {
+					toast.success('Não foi possível criar a transação!')
+				},
+			})
+		}
 	}
 
 	const handleTypeChange = (value: string) => {
@@ -112,7 +133,7 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 						value: key,
 						label: (
 							<>
-								{value.icon}
+								{value.icon()}
 								<span>{value.label}</span>
 							</>
 						),
@@ -229,7 +250,7 @@ export default function AddTransactionForm(props: AddTransactionFormProps) {
 								? 'bg-red-500 hover:bg-red-600'
 								: 'bg-green-500 hover:bg-green-600'
 						}`}
-						isLoading={addEntryMutation.isLoading}
+						isLoading={addEntryMutation.isLoading || editUpdateMutation.isLoading}
 					>
 						Salvar
 					</LoadButton>

@@ -19,7 +19,7 @@ export const ShortcutsCard = () => {
 						)}
 					>
 						<BadgePlus size={40} />
-						<span className="text-gray-900">Adicionar</span>
+						<p className="text-gray-900 text-center">Adicionar</p>
 					</div>
 				</Link>
 				<Link href="/lancamentos" className="flex-1 min-w-32">
@@ -31,7 +31,7 @@ export const ShortcutsCard = () => {
 						)}
 					>
 						<DollarSign size={40} />
-						<span className="text-gray-900">Transações</span>
+						<p className="text-gray-900 text-center">Transações</p>
 					</div>
 				</Link>
 				<Link href="/relatorios?t=despesas" className="flex-1 min-w-32">
@@ -43,7 +43,7 @@ export const ShortcutsCard = () => {
 						)}
 					>
 						<List size={40} />
-						<span className="text-gray-900">Relatório despesas</span>
+						<p className="text-gray-900 text-center">Relatório despesas</p>
 					</div>
 				</Link>
 				<Link href="/relatorios?t=mapa" className="flex-1 min-w-32">
@@ -55,7 +55,7 @@ export const ShortcutsCard = () => {
 						)}
 					>
 						<Gauge size={40} />
-						<span className="text-gray-900">Mapa de categorias</span>
+						<p className="text-gray-900 text-center">Mapa de categorias</p>
 					</div>
 				</Link>
 			</CardContent>

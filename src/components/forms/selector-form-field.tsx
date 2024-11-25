@@ -12,7 +12,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 type SelectorFormFieldProps = {
@@ -25,11 +24,6 @@ export const SelectorFormField = (props: SelectorFormFieldProps) => {
 	const { label, name, options } = props
 	const form = useFormContext()
 
-	useEffect(() => {
-		form.setValue(name, options[0].value)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [options])
-
 	return (
 		<FormField
 			control={form.control}
@@ -37,7 +31,7 @@ export const SelectorFormField = (props: SelectorFormFieldProps) => {
 			render={({ field }) => (
 				<FormItem>
 					<FormLabel>{label}</FormLabel>
-					<Select onValueChange={field.onChange} defaultValue={options[0].value}>
+					<Select onValueChange={field.onChange} value={field.value}>
 						<FormControl>
 							<SelectTrigger>
 								<div className="flex items-center">

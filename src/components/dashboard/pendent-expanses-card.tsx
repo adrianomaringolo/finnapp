@@ -34,7 +34,7 @@ export const PendentExpansesCard = (props: PendentExpansesCardProps) => {
 							<div className="flex items-center justify-between cursor-pointer py-1 ">
 								<div className="flex items-center gap-4">
 									<div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
-										{typeDefinition?.icon}
+										{typeDefinition?.icon()}
 									</div>
 									<span className="text-lg">{entry.description}</span>
 								</div>

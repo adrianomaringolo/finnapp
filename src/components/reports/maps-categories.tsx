@@ -41,7 +41,7 @@ export const MapsCategories = (props: MapsCategoriesProps) => {
 							key={key}
 							title={
 								<div className="flex gap-1 items-center mb-4">
-									{value.icon}
+									{value.icon()}
 									{value.label}
 								</div>
 							}

@@ -7,6 +7,7 @@ const COLLECTION = 'entries'
 
 export interface DeleteEntryVariables {
 	userId: string
+	monthYear: string
 	entryId: string
 }
 
@@ -16,7 +17,10 @@ export const useDeleteEntry = (variables: DeleteEntryVariables) => {
 
 	const firestoreMutationQuery = useFirestoreDocumentDeletion(entryDocRef, {
 		onSuccess() {
-			queryClient.invalidateQueries(['entries', { userId: variables.userId }])
+			queryClient.invalidateQueries([
+				'entries',
+				{ userId: variables.userId, monthYear: variables.monthYear },
+			])
 		},
 	})
 
