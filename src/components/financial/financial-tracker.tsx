@@ -8,6 +8,7 @@ import { groupTransactionsByDate } from '@/lib/utils/groupTransactionsByDate'
 import { useGetEntries } from '@/services/entries/useGetEntries'
 import { DialogDescription } from '@radix-ui/react-dialog'
 import { Plus } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { Skeleton } from '../ui/skeleton'
 import AddTransactionForm from './add-transaction-form'
@@ -21,7 +22,8 @@ type FinancialTrackerProps = {
 export function FinancialTracker(props: FinancialTrackerProps) {
 	const { user } = useAuth()
 
-	const [isOpen, setIsOpen] = useState(false)
+	const searchParams = useSearchParams()
+	const [isOpen, setIsOpen] = useState(searchParams.get('m') === 'nova')
 
 	const { data: entries = [], isLoading } = useGetEntries({
 		userId: user?.uid as string,

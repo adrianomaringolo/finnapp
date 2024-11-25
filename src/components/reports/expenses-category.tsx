@@ -10,21 +10,23 @@ export const ExpensesCategoryTotal = (props: ExpensesCategoryTotalProps) => {
 	const { entries } = props
 
 	// group the entries by category
-	const groupedEntries = entries.reduce(
-		(acc, entry) => {
-			const category = entry.category
-			const amount = entry.amount
+	const groupedEntries = entries
+		.filter((entry) => entry.amount < 0)
+		.reduce(
+			(acc, entry) => {
+				const category = entry.category
+				const amount = entry.amount
 
-			if (!acc[category]) {
-				acc[category] = 0
-			}
+				if (!acc[category]) {
+					acc[category] = 0
+				}
 
-			acc[category] += amount
+				acc[category] += amount
 
-			return acc
-		},
-		{} as Record<string, number>,
-	)
+				return acc
+			},
+			{} as Record<string, number>,
+		)
 
 	return (
 		<div>

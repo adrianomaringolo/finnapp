@@ -8,9 +8,14 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog'
+import { useAuth } from '@/lib/context/AuthContext'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { formatCurrency } from '@/lib/utils'
+import { useUpdateEntry } from '@/services/entries/useUpdateEntry'
 import { BadgeAlert, BadgeCheck, Edit } from 'lucide-react'
+import { toast } from 'sonner'
+
+import { TooltipMessage } from '../helpers/tooltip-message'
 import { TransactionTypes } from './financial.types'
 import { TransactionItemRemove } from './transaction-item-remove'
 
@@ -20,12 +25,26 @@ type TransactionItemProps = {
 }
 
 export const TransactionItem = (props: TransactionItemProps) => {
+	const { user } = useAuth()
 	const { transaction, onEdit } = props
 
 	const { category, description, amount, isCompleted } = transaction
 
 	const typeDefinition = TransactionTypes[category as keyof typeof TransactionTypes]
 	const amountColor = amount > 0 ? 'text-green-500' : 'text-red-500'
+
+	const updateEntryMutation = useUpdateEntry({
+		userId: user?.uid as string,
+		monthYear: transaction.monthYear,
+	})
+
+	const handleComplete = async () => {
+		await updateEntryMutation.mutateAsync({
+			...transaction,
+			isCompleted: !isCompleted,
+		})
+		toast.success('Transação atualizada com sucesso')
+	}
 
 	return (
 		<Dialog>
@@ -41,11 +60,20 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						<span className={`text-lg font-medium ${amountColor}`}>
 							{formatCurrency(amount ?? 0)}
 						</span>
-						{isCompleted ? (
-							<BadgeCheck className="w-5 h-5 text-green-500" />
-						) : (
-							<BadgeAlert className="w-5 h-5 text-gray-500" />
-						)}
+						<TooltipMessage message={isCompleted ? 'Efetivada' : 'Pendente'}>
+							<button
+								onClick={(e) => {
+									e.preventDefault()
+									handleComplete()
+								}}
+							>
+								{isCompleted ? (
+									<BadgeCheck className="w-5 h-5 text-green-500" />
+								) : (
+									<BadgeAlert className="w-5 h-5 text-gray-300" />
+								)}
+							</button>
+						</TooltipMessage>
 					</div>
 				</div>
 			</DialogTrigger>

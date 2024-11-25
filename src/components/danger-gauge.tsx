@@ -7,7 +7,7 @@ type DangerGaugeProps = {
 }
 
 export function DangerGauge(props: DangerGaugeProps) {
-	const { title, value, maxValue } = props
+	const { title, value = 0, maxValue = 100 } = props
 
 	// Ensure value is between 0 and maxValue
 	const normalizedValue = Math.min(Math.max(0, value), maxValue)

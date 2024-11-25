@@ -12,7 +12,7 @@ export const MapsCategories = (props: MapsCategoriesProps) => {
 	// sum incomes
 	const income = props.entries
 		.filter((entry) => entry.amount > 0)
-		.reduce((acc, entry) => acc + entry.amount, 0)
+		.reduce((acc, entry) => acc + entry.amount, 1)
 
 	// for each categories, sum the total amount
 	const groupedEntries = props.entries.reduce(

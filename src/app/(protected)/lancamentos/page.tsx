@@ -12,7 +12,7 @@ export default function Entries() {
 	const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear())
 
 	return (
-		<div>
+		<section>
 			<div className="rounded-xl bg-gray-100 py-2 px-4">
 				<MonthYearNavigatorComponent
 					currentMonth={currentMonth}
@@ -27,6 +27,6 @@ export default function Entries() {
 			<FinancialTracker
 				monthYear={`${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}`}
 			/>
-		</div>
+		</section>
 	)
 }
