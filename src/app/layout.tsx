@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import { Toaster } from '@/components/ui/sonner'
 import { clientConfig, serverConfig } from '@/config'
 import { User } from '@/lib/context/AuthContext'

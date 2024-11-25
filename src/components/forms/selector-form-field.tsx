@@ -27,6 +27,7 @@ export const SelectorFormField = (props: SelectorFormFieldProps) => {
 
 	useEffect(() => {
 		form.setValue(name, options[0].value)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [options])
 
 	return (
