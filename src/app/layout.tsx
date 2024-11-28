@@ -5,8 +5,15 @@ import { User } from '@/lib/context/AuthContext'
 import { AuthProvider } from '@/lib/context/AuthProvider'
 import { getTokens, Tokens } from 'next-firebase-auth-edge'
 import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
+import { Montserrat } from 'next/font/google'
 import { cookies } from 'next/headers'
 import './globals.css'
+
+// If loading a variable font, you don't need to specify the font weight
+const inter = Montserrat({
+	subsets: ['latin'],
+	display: 'swap',
+})
 
 const toUser = ({ decodedToken }: Tokens): User => {
 	const {
@@ -43,7 +50,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	const user = tokens ? toUser(tokens) : null
 
 	return (
-		<html lang="en">
+		<html lang="en" className={inter.className}>
 			<head>
 				<meta name="application-name" content="FinnApp" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -112,10 +119,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-				<link
-					href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=optional"
-					rel="stylesheet"
-				/>
 			</head>
 
 			<body>

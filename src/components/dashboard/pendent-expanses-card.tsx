@@ -1,6 +1,6 @@
 import { FinancialEntry } from '@/lib/types/Entry.type'
-import { formatCurrency } from '@/lib/utils'
 import { BadgeAlert, BadgeCheck } from 'lucide-react'
+import { AmountValue } from '../financial/amount-value'
 import { TransactionTypes } from '../financial/financial.types'
 import { TooltipMessage } from '../helpers/tooltip-message'
 import { Card, CardContent, CardTitle } from '../ui/card'
@@ -27,7 +27,6 @@ export const PendentExpansesCard = (props: PendentExpansesCardProps) => {
 				{pendentExpanses.map((entry) => {
 					const typeDefinition =
 						TransactionTypes[entry.category as keyof typeof TransactionTypes]
-					const amountColor = entry.amount > 0 ? 'text-green-500' : 'text-red-500'
 
 					return (
 						<div key={entry.id} className="w-full">
@@ -36,12 +35,10 @@ export const PendentExpansesCard = (props: PendentExpansesCardProps) => {
 									<div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
 										{typeDefinition?.icon()}
 									</div>
-									<span className="text-lg">{entry.description}</span>
+									<span>{entry.description}</span>
 								</div>
 								<div className="flex items-center gap-2">
-									<span className={`text-lg font-medium ${amountColor}`}>
-										{formatCurrency(entry.amount ?? 0)}
-									</span>
+									<AmountValue value={entry.amount} />
 									<TooltipMessage message={entry.isCompleted ? 'Efetivada' : 'Pendente'}>
 										{entry.isCompleted ? (
 											<BadgeCheck className="w-5 h-5 text-green-500" />
