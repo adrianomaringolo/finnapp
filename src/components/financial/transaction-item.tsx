@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/dialog'
 import { useAuth } from '@/lib/context/AuthContext'
 import { FinancialEntry } from '@/lib/types/Entry.type'
-import { formatCurrency } from '@/lib/utils'
 import { useUpdateEntry } from '@/services/entries/useUpdateEntry'
 import { BadgeAlert, BadgeCheck, Edit } from 'lucide-react'
 import { toast } from 'sonner'
@@ -17,6 +16,7 @@ import { toast } from 'sonner'
 import { formatDateAndWeekdayAndYear } from '@/lib/utils/date'
 import { useState } from 'react'
 import { TooltipMessage } from '../helpers/tooltip-message'
+import { AmountValue } from './amount-value'
 import { TransactionTypes } from './financial.types'
 import { TransactionForm } from './transaction-form'
 import { TransactionItemRemove } from './transaction-item-remove'
@@ -35,7 +35,6 @@ export const TransactionItem = (props: TransactionItemProps) => {
 	const { category, date, description, amount, isCompleted } = transaction
 
 	const typeDefinition = TransactionTypes[category as keyof typeof TransactionTypes]
-	const amountColor = amount > 0 ? 'text-green-500' : 'text-red-500'
 
 	const updateEntryMutation = useUpdateEntry({
 		userId: user?.uid as string,
@@ -69,9 +68,8 @@ export const TransactionItem = (props: TransactionItemProps) => {
 					<span className="text-lg">{description}</span>
 				</div>
 				<div className="flex items-center gap-2">
-					<span className={`text-lg font-medium ${amountColor}`}>
-						{formatCurrency(amount ?? 0)}
-					</span>
+					<AmountValue value={amount} className="text-lg font-medium" />
+
 					<TooltipMessage message={isCompleted ? 'Efetivada' : 'Pendente'}>
 						<button
 							onClick={(e) => {
@@ -96,9 +94,8 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						<DialogDescription>{formatDateAndWeekdayAndYear(date)}</DialogDescription>
 					</DialogHeader>
 					<div className="py-4">
-						<div className={`font-semibold text-xl mb-4 ${amountColor}`}>
-							{formatCurrency(amount)}
-						</div>
+						<AmountValue value={amount} className="text-2xl font-semibold" />
+
 						<div className="flex items-center gap-3">
 							<div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
 								{typeDefinition?.icon()}
