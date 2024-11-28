@@ -27,6 +27,7 @@ import { useState } from 'react'
 
 export default function UserProfile() {
 	const { user } = useAuth()
+
 	const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false)
 	const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false)
 

@@ -32,6 +32,7 @@ import {
 	ChartPie,
 	DollarSign,
 	HelpCircle,
+	Lock,
 	LogOut,
 	LucideIcon,
 	Menu,
@@ -74,6 +75,7 @@ export function ResponsiveNav() {
 	const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false)
 
 	const { user } = useAuth()
+	const isAdmin = user?.customClaims.admin ?? false
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
 	const navItems = [
@@ -170,6 +172,14 @@ export function ResponsiveNav() {
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent className="w-56" align="end" forceMount>
+								{isAdmin && (
+									<DropdownMenuItem asChild>
+										<Link href="/admin">
+											<Lock className="mr-2 h-4 w-4" />
+											<span>Administração</span>
+										</Link>
+									</DropdownMenuItem>
+								)}
 								<DropdownMenuItem asChild>
 									<Link href="/perfil">
 										<User className="mr-2 h-4 w-4" />

@@ -20,10 +20,3 @@ export function getTemperatureColor(value: number, maxValue: number): string {
 		return 'rgb(244, 67, 54)'
 	}
 }
-
-// Example usage
-console.log(getTemperatureColor(0, 100)) // rgb(76, 255, 80)
-console.log(getTemperatureColor(40, 100)) // rgb(76, 235, 80)
-console.log(getTemperatureColor(60, 100)) // rgb(255, 235, 59)
-console.log(getTemperatureColor(80, 100)) // rgb(255, 0, 0)
-console.log(getTemperatureColor(100, 100)) // rgb(244, 67, 54)

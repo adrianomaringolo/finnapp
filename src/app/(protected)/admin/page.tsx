@@ -1,0 +1,41 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+'use client'
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { UsersTable } from '@/components/users/users-table'
+import { useAuth } from '@/lib/context/AuthContext'
+import { Lock } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+
+export default function AdminPanel() {
+	const { user } = useAuth()
+	const isAdmin = user?.customClaims.admin
+
+	const router = useRouter()
+
+	if (!isAdmin) {
+		router.push('/')
+	}
+
+	if (!user) {
+		return null
+	}
+
+	return (
+		<section>
+			<h2 className="text-2xl font-semibold flex gap-2 items-center">
+				<Lock /> Administração
+			</h2>
+			<Tabs defaultValue="usuarios" className="mt-8">
+				<TabsList>
+					<TabsTrigger value="usuarios" className="px-4 py-3 gap-2 bg-gray-50">
+						Usuários
+					</TabsTrigger>
+				</TabsList>
+				<TabsContent value="usuarios" className="p-2">
+					<UsersTable />
+				</TabsContent>
+			</Tabs>
+		</section>
+	)
+}
