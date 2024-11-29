@@ -23,7 +23,7 @@ export const TransactionTypes = {
 		max: 100,
 		color: '#22c55e',
 		icon: (className?: string) => (
-			<CircleDollarSign className={cn('w-6 h-6 text-green-400', className)} />
+			<CircleDollarSign className={cn('w-6 h-6 text-blue-400', className)} />
 		),
 
 		help: '',

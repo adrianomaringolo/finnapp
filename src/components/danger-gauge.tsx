@@ -22,7 +22,7 @@ export function DangerGauge(props: DangerGaugeProps) {
 					className="w-full h-full inset-0 rounded-sm"
 					style={{
 						background:
-							'linear-gradient(90deg, #4CAF50 0%, #FFEB3B 40%, #FF9800 60%, #F44336 80%)',
+							'linear-gradient(90deg, #295f9d 0%, #ee9931 50%, rgb(244, 67, 54) 80%)',
 					}}
 					role="progressbar"
 					aria-valuenow={percentage}

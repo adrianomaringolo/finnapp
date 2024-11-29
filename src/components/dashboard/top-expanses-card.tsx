@@ -36,7 +36,7 @@ export const TopExpansesCard = (props: TopExpansesCardProps) => {
 									<AmountValue value={entry.amount} />
 									<TooltipMessage message={entry.isCompleted ? 'Efetivada' : 'Pendente'}>
 										{entry.isCompleted ? (
-											<BadgeCheck className="w-5 h-5 text-green-500" />
+											<BadgeCheck className="w-5 h-5 text-blue-500" />
 										) : (
 											<BadgeAlert className="w-5 h-5 text-gray-300" />
 										)}

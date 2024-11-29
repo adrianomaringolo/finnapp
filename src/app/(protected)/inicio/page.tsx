@@ -19,9 +19,7 @@ export default function Dashboard() {
 
 	return (
 		<section>
-			<h2 className="text-lg text-gray-800 mb-4 capitalize">
-				{formatDateAndWeekday(new Date())}
-			</h2>
+			<h2 className="text-lg text-gray-800 mb-4">{formatDateAndWeekday(new Date())}</h2>
 
 			<div className="gap-8 columns-1 md:columns-2">
 				<ShortcutsCard />

@@ -169,8 +169,8 @@ export const TransactionForm = (props: TransactionFormProps) => {
 					value={AmountTypes.income}
 					className={`transition-all ${
 						formType === AmountTypes.income
-							? '!bg-green-500 !text-white hover:!bg-green-600 flex-1'
-							: '!bg-green-100 !text-green-600 hover:!bg-green-200'
+							? '!bg-blue-500 !text-white hover:!bg-blue-600 flex-1'
+							: '!bg-blue-100 !text-blue-600 hover:!bg-blue-200'
 					}`}
 				>
 					Receita
@@ -190,7 +190,7 @@ export const TransactionForm = (props: TransactionFormProps) => {
 										className={`${
 											formType === AmountTypes.expanses
 												? 'border-red-500'
-												: 'border-green-500'
+												: 'border-blue-500'
 										}`}
 										decimalSeparator=","
 										thousandSeparator="."
@@ -248,7 +248,7 @@ export const TransactionForm = (props: TransactionFormProps) => {
 						className={`w-full ${
 							formType === AmountTypes.expanses
 								? 'bg-red-500 hover:bg-red-600'
-								: 'bg-green-500 hover:bg-green-600'
+								: 'bg-blue-500 hover:bg-blue-600'
 						}`}
 						isLoading={addEntryMutation.isLoading || editUpdateMutation.isLoading}
 					>

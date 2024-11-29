@@ -79,7 +79,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 							className="hover:border-gray-400 hover:bg-gray-50 p-1 rounded-full"
 						>
 							{isCompleted ? (
-								<BadgeCheck className="w-5 h-5 text-green-500" />
+								<BadgeCheck className="w-5 h-5 text-blue-500" />
 							) : (
 								<BadgeAlert className="w-5 h-5 text-gray-300" />
 							)}

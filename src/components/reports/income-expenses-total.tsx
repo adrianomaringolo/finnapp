@@ -22,7 +22,7 @@ export const IncomeExpensesTotal = (props: IncomeExpensesTotalProps) => {
 	return (
 		<>
 			<div className="flex items-center gap-2">
-				<CirclePlus size={45} className="text-green-500" />
+				<CirclePlus size={45} className="text-blue-500" />
 				<div>
 					<div className="text-gray-600">Receitas</div>
 					<AmountValue value={income} className="text-xl font-medium" />

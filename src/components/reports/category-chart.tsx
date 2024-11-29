@@ -82,7 +82,7 @@ export const CategoryChart = (props: CategoryChartProps) => {
 		<Card className="flex flex-col">
 			<CardHeader className="items-center pb-0">
 				<CardTitle>Distribuição de despesas</CardTitle>
-				<CardDescription>January - June 2024</CardDescription>
+				<CardDescription className="sr-only">Gráfico de despesas do mês</CardDescription>
 			</CardHeader>
 			<CardContent className="flex-1 pb-0">
 				<ChartContainer
