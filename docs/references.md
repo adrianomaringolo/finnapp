@@ -1,0 +1,1 @@
+https://everythingcs.dev/blog/react-firebase-authentication/#step-23-firebase-configuration

@@ -18,7 +18,11 @@ export const TopExpansesCard = (props: TopExpansesCardProps) => {
 	return (
 		<Card className="break-inside-avoid-column inline-block w-full my-4 mt-0 p-4">
 			<CardTitle>Top 5 despesas</CardTitle>
+
 			<CardContent className="px-0 py-4">
+				{topExpanses.length === 0 && (
+					<div className="text-center text-gray-500 mt-4">Nenhuma despesa lançada</div>
+				)}
 				{topExpanses.map((entry) => {
 					const typeDefinition =
 						TransactionTypes[entry.category as keyof typeof TransactionTypes]

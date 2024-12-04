@@ -17,6 +17,7 @@ import { Switch } from '@/components/ui/switch'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { useAuth } from '@/lib/context/AuthContext'
 import { FinancialEntry } from '@/lib/types/Entry.type'
+import { formatCurrency } from '@/lib/utils'
 import { useAddEntry } from '@/services/entries/useAddEntry'
 import { useUpdateEntry } from '@/services/entries/useUpdateEntry'
 import { toast } from 'sonner'
@@ -25,6 +26,7 @@ import { DateFormField } from '../forms/date-form-field'
 import { LoadButton } from '../forms/load-button'
 import { SelectorFormField } from '../forms/selector-form-field'
 import { TextFormField } from '../forms/text-form-field'
+import { TextareaFormField } from '../forms/textarea-form-field'
 import { AmountType, AmountTypes, TransactionTypes } from './financial.types'
 
 const formSchema = z.object({
@@ -32,6 +34,7 @@ const formSchema = z.object({
 	amount: z.string().min(1, 'Amount is required'),
 	description: z.string().min(1, 'Description is required'),
 	category: z.string().min(1, 'Category is required'),
+	times: z.string().optional(),
 	notes: z.string().optional(),
 	date: z.date({
 		required_error: 'Please select a date',
@@ -61,6 +64,7 @@ export const TransactionForm = (props: TransactionFormProps) => {
 			amount: Math.abs(transactionToEdit?.amount ?? 0).toString() ?? '',
 			description: transactionToEdit?.description ?? '',
 			category: transactionToEdit?.category ?? '',
+			times: transactionToEdit?.times ?? '1',
 			notes: transactionToEdit?.notes ?? '',
 			date: transactionToEdit?.date ? new Date(transactionToEdit?.date) : new Date(),
 			completed: transactionToEdit?.isCompleted ?? true,
@@ -91,12 +95,12 @@ export const TransactionForm = (props: TransactionFormProps) => {
 				{ ...transactionToEdit, ...newTransaction },
 				{
 					onSuccess: () => {
-						toast.success('A transação foi atualizada com sucesso!')
+						toast.success('O lançamento foi atualizada com sucesso!')
 						handleClose()
 						form.reset()
 					},
 					onError: () => {
-						toast.success('Não foi possível atualizar a transação!')
+						toast.error('Não foi possível atualizar o lançamento!')
 					},
 				},
 			)
@@ -104,12 +108,12 @@ export const TransactionForm = (props: TransactionFormProps) => {
 		} else {
 			addEntryMutation.mutate(newTransaction, {
 				onSuccess: () => {
-					toast.success('A transação foi criada com sucesso!')
+					toast.success('O lançamento foi criada com sucesso!')
 					handleClose()
 					form.reset()
 				},
 				onError: () => {
-					toast.success('Não foi possível criar a transação!')
+					toast.success('Não foi possível criar o lançamento!')
 				},
 			})
 		}
@@ -147,8 +151,14 @@ export const TransactionForm = (props: TransactionFormProps) => {
 	const expensesCategories = getTypeCategories(AmountTypes.expanses as AmountType)
 	const incomeCategories = getTypeCategories(AmountTypes.income as AmountType)
 
+	//  create an array of options to select the amount of times an expense is divided. It will go from 1 to 24. the label of 1 should be "A vista"
+	const timesOptions = Array.from({ length: 24 }, (_, i) => ({
+		value: (i + 1).toString(),
+		label: i === 0 ? 'À vista' : `${i + 1} vezes`,
+	}))
+
 	return (
-		<div className="w-full max-w-md mx-auto p-6 space-y-6">
+		<div className="w-full max-w-md mx-auto p-2 md:p-6 space-y-6">
 			<ToggleGroup
 				type="single"
 				value={formType}
@@ -189,8 +199,8 @@ export const TransactionForm = (props: TransactionFormProps) => {
 										sizing="2xl"
 										className={`${
 											formType === AmountTypes.expanses
-												? 'border-red-500'
-												: 'border-blue-500'
+												? 'border-expense'
+												: 'border-income'
 										}`}
 										decimalSeparator=","
 										thousandSeparator="."
@@ -205,27 +215,44 @@ export const TransactionForm = (props: TransactionFormProps) => {
 						)}
 					/>
 
-					<TextFormField name="description" label="Descrição" />
+					<TextFormField name="description" placeholder="Descrição" />
 
-					<DateFormField label="Data" />
+					<DateFormField />
 
 					{formType === AmountTypes.expanses ? (
 						<SelectorFormField
 							key={'expanses-category-' + formType}
-							label="Categoria"
 							name="category"
 							options={expensesCategories}
 						/>
 					) : (
 						<SelectorFormField
 							key={'income-category-' + formType}
-							label="Categoria"
 							name="category"
 							options={incomeCategories}
 						/>
 					)}
+					<TextareaFormField
+						name="notes"
+						placeholder="Adicione observações se necessário"
+					/>
 
-					<TextFormField mode="textarea" name="notes" label="Observações" />
+					{formType === AmountTypes.expanses && (
+						<>
+							<SelectorFormField
+								key={'times-' + formType}
+								label="Parcelas"
+								name="times"
+								options={timesOptions}
+							/>
+							{+(form.watch('times') ?? 1) > 1 ? (
+								<p className="text-xs !mt-1 italic text-gray-600">
+									Você pagará em {form.watch('times')} parcelas de{' '}
+									{formatCurrency(+form.watch('amount'))}
+								</p>
+							) : null}
+						</>
+					)}
 
 					<FormField
 						control={form.control}

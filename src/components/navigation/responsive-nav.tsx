@@ -81,6 +81,7 @@ export function ResponsiveNav() {
 	const navItems = [
 		{ icon: DollarSign, name: 'Lançamentos', href: '/lancamentos' },
 		{ icon: ChartPie, name: 'Relatórios', href: '/relatorios' },
+		{ icon: HelpCircle, name: 'Como usar', href: '/ajuda' },
 	]
 
 	async function handleLogout() {
@@ -150,24 +151,12 @@ export function ResponsiveNav() {
 					</Sheet>
 
 					<div className="flex items-center ml-auto">
-						<Link
-							href="ajuda"
-							className={cn(
-								'block select-none space-y-1 rounded-md p-3 leading-none mr-2',
-								'no-underline outline-none transition-colors hover:bg-accent flex gap-2 items-center',
-								'hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-							)}
-						>
-							<HelpCircle className="h-5 w-5" />
-						</Link>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<Button variant="ghost" className="relative h-8 w-8 rounded-full ">
 									<Avatar className="h-8 w-8">
 										<AvatarImage src={user?.photoURL ?? ''} alt="Foto de perfil" />
-										<AvatarFallback className="bg-[#cb1f27]">
-											{userInitials}
-										</AvatarFallback>
+										<AvatarFallback className="bg-income">{userInitials}</AvatarFallback>
 									</Avatar>
 								</Button>
 							</DropdownMenuTrigger>

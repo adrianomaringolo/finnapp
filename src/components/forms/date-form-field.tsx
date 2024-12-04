@@ -18,7 +18,7 @@ import { formatLongDate } from '@/lib/utils/date'
 import { useState } from 'react'
 
 type DateFormFieldProps = {
-	label: string
+	label?: string
 }
 
 export const DateFormField = (props: DateFormFieldProps) => {
@@ -32,7 +32,7 @@ export const DateFormField = (props: DateFormFieldProps) => {
 			name="date"
 			render={({ field }) => (
 				<FormItem className="flex flex-col">
-					<FormLabel>{label}</FormLabel>
+					{label && <FormLabel>{label}</FormLabel>}
 					<Popover open={isDatePickerOpen} onOpenChange={setIsDatePickerOpen}>
 						<PopoverTrigger asChild>
 							<FormControl>

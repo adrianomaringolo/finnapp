@@ -11,7 +11,13 @@ export const ExpansesCategoryCard = (props: ExpansesCategoryCardProps) => {
 		<Card className="break-inside-avoid-column inline-blockw-full my-4 p-4">
 			<CardTitle>Gastos por categoria</CardTitle>
 			<CardContent className="px-0 py-2">
-				<ExpensesCategoryTotal entries={props.entries} />
+				{props.entries.length === 0 ? (
+					<div className="text-center text-gray-500 mt-4">
+						Ainda não foram lançadas despesas esse mês
+					</div>
+				) : (
+					<ExpensesCategoryTotal entries={props.entries} />
+				)}
 			</CardContent>
 		</Card>
 	)

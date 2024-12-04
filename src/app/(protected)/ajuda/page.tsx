@@ -23,7 +23,7 @@ export default function Help() {
 						Categorias
 					</TabsTrigger>
 					<TabsTrigger value="transacoes" className="px-4 py-3 gap-2 bg-gray-50">
-						Transações
+						Lançamentos
 					</TabsTrigger>
 					<TabsTrigger value="graficos" className="px-4 py-3 gap-2 bg-gray-50">
 						Gráficos
@@ -47,8 +47,8 @@ export default function Help() {
 						))}
 					</section>
 				</TabsContent>
-				<TabsContent value="transacoes" className="p-2">
-					<section className="mt-4">Explicação sobre as transações</section>
+				<TabsContent value="lancamentos" className="p-2">
+					<section className="mt-4">Explicação sobre os lançamentos</section>
 				</TabsContent>
 				<TabsContent value="graficos" className="p-2">
 					<section className="mt-4">Explicação sobre os gráficos</section>

@@ -32,7 +32,7 @@ export const TransactionItemRemove = (props: TransactionItemRemoveProps) => {
 
 	const onRemove = () => {
 		deleteMutation.mutateAsync().then(() => {
-			toast.success('Transação removida com sucesso')
+			toast.success('Lançamento removido com sucesso')
 		})
 	}
 
@@ -52,8 +52,8 @@ export const TransactionItemRemove = (props: TransactionItemRemoveProps) => {
 				<AlertDialogHeader>
 					<AlertDialogTitle>Tem certeza?</AlertDialogTitle>
 					<AlertDialogDescription>
-						Essa ação não pode ser desfeita. Você tem certeza que deseja excluir essa
-						transação?
+						Essa ação não pode ser desfeita. Você tem certeza que deseja excluir esse
+						lançamento?
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>

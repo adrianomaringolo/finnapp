@@ -3,6 +3,7 @@ export interface FinancialEntry {
 	amount: number
 	description: string
 	notes?: string
+	times?: string
 	isCompleted: boolean
 	date: string
 	createdAt: string

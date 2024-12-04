@@ -15,7 +15,7 @@ export const ShortcutsCard = () => {
 						className={cn(
 							'border p-3 rounded my-1 flex flex-col gap-2 justify-center items-center',
 							'text-blue-400 cursor-pointer transition-all',
-							'hover:bg-blue-400 hover:text-white',
+							'hover:bg-blue-400 hover:text-white hover:border-blue-400',
 						)}
 					>
 						<BadgePlus size={40} />
@@ -27,11 +27,11 @@ export const ShortcutsCard = () => {
 						className={cn(
 							'border p-3 rounded my-1 flex flex-col gap-2 justify-center items-center',
 							'text-gray-400 cursor-pointer transition-all',
-							'hover:bg-gray-400 hover:text-white',
+							'hover:bg-gray-400 hover:text-white hover:border-gray-400',
 						)}
 					>
 						<DollarSign size={40} />
-						<p className="text-gray-900 text-center text-sm">Transações</p>
+						<p className="text-gray-900 text-center text-sm">Lançamentos</p>
 					</div>
 				</Link>
 				<Link href="/relatorios?t=despesas" className="flex-1 min-w-32">
@@ -39,7 +39,7 @@ export const ShortcutsCard = () => {
 						className={cn(
 							'border p-3 rounded my-1 flex flex-col gap-2 justify-center items-center',
 							'text-orange-400 cursor-pointer transition-all',
-							'hover:bg-orange-400 hover:text-white',
+							'hover:bg-orange-400 hover:text-white hover:border-orange-400',
 						)}
 					>
 						<List size={40} />
@@ -51,7 +51,7 @@ export const ShortcutsCard = () => {
 						className={cn(
 							'border p-3 rounded my-1 flex flex-col gap-2 justify-center items-center',
 							'text-red-400 cursor-pointer transition-all',
-							'hover:bg-red-400 hover:text-white',
+							'hover:bg-red-400 hover:text-white hover:border-red-400',
 						)}
 					>
 						<Gauge size={40} />

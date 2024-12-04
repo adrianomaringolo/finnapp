@@ -15,7 +15,7 @@ import {
 import { useFormContext } from 'react-hook-form'
 
 type SelectorFormFieldProps = {
-	label: string
+	label?: string
 	name: string
 	options: { value: string; label: string | JSX.Element }[]
 }
@@ -30,7 +30,7 @@ export const SelectorFormField = (props: SelectorFormFieldProps) => {
 			name={name}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel>{label}</FormLabel>
+					{label && <FormLabel>{label}</FormLabel>}
 					<Select onValueChange={field.onChange} value={field.value}>
 						<FormControl>
 							<SelectTrigger>

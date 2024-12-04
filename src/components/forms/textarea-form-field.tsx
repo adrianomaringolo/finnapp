@@ -9,28 +9,28 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
-import { AdaptiveInput } from './adaptative-input'
+import { Textarea } from '../ui/textarea'
 
 type TextFormFieldProps = {
 	label?: string
+	name: string
 }
 
-export const TextFormField = (
-	props: TextFormFieldProps & React.ComponentProps<'input'>,
+export const TextareaFormField = (
+	props: TextFormFieldProps & React.ComponentProps<'textarea'>,
 ) => {
 	const { label, name, ...rest } = props
-
 	const form = useFormContext()
 
 	return (
 		<FormField
 			control={form.control}
-			name={name as string}
+			name={name}
 			render={({ field }) => (
 				<FormItem>
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
-						<AdaptiveInput {...rest} {...field} />
+						<Textarea className="resize-none" {...rest} {...field} />
 					</FormControl>
 					<FormMessage />
 				</FormItem>

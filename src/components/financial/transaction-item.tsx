@@ -46,7 +46,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 			...transaction,
 			isCompleted: !isCompleted,
 		})
-		toast.success('Transação atualizada com sucesso')
+		toast.success('Lançamento atualizada com sucesso')
 	}
 
 	const handleEdit = () => {
@@ -116,8 +116,8 @@ export const TransactionItem = (props: TransactionItemProps) => {
 
 			<Dialog modal open={isEditing} onOpenChange={(open) => setIsEditing(open)}>
 				<DialogHeader className="sr-only">
-					<DialogTitle>Editar transação</DialogTitle>
-					<DialogDescription>Edite os dados da transação</DialogDescription>
+					<DialogTitle>Editar Lançamento</DialogTitle>
+					<DialogDescription>Edite os dados do lançamento</DialogDescription>
 				</DialogHeader>
 				<DialogContent>
 					<TransactionForm

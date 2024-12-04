@@ -6,14 +6,15 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import {
 	getAuth,
+	getRedirectResult,
 	GoogleAuthProvider,
 	signInWithEmailAndPassword,
-	signInWithPopup,
+	signInWithRedirect,
 } from 'firebase/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { app } from '../../firebase'
 
@@ -23,25 +24,74 @@ export default function Login() {
 	const [error, setError] = useState('')
 	const router = useRouter()
 
+	const auth = getAuth()
+
 	const signWithGoogle = async () => {
 		setError('')
 
 		try {
 			const provider = new GoogleAuthProvider()
-			const credential = await signInWithPopup(getAuth(app), provider)
-			const idToken = await credential.user.getIdToken()
-
-			await fetch('/api/login', {
-				headers: {
-					Authorization: `Bearer ${idToken}`,
-				},
-			})
-
-			router.push('/')
+			signInWithRedirect(auth, provider)
 		} catch (e) {
 			setError((e as Error).message)
 		}
 	}
+
+	const authResult = async () => {
+		try {
+			//setSignInLoading(true);
+			const user = await getRedirectResult(auth)
+			return user
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		} catch (error) {
+			return null
+		}
+	}
+
+	useEffect(() => {
+		authResult()
+			.then(async (res) => {
+				//setSignInLoading(false);
+				if (!res) {
+					return
+				}
+				debugger
+				console.log(res.user.uid)
+			})
+			.catch(() => {
+				return null
+			})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	// useEffect(() => {
+	// 	const handleAuthRedirect = async () => {
+	// 		try {
+	// 			const result = await getRedirectResult(auth)
+	// 			debugger
+	// 			if (result) {
+	// 				const credential = GoogleAuthProvider.credentialFromResult(result)
+	// 				const user: User = result.user
+
+	// 				const idToken = await user.getIdToken()
+
+	// 				await fetch('/api/login', {
+	// 					headers: {
+	// 						Authorization: `Bearer ${idToken}`,
+	// 					},
+	// 				})
+
+	// 				router.push('/')
+	// 				console.log('User signed in via redirect:', user)
+	// 			}
+	// 		} catch (error) {
+	// 			console.error('Error handling redirect:', error)
+	// 		}
+	// 	}
+
+	// 	handleAuthRedirect()
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [])
 
 	async function handleSubmit(event: FormEvent) {
 		event.preventDefault()
@@ -80,7 +130,7 @@ export default function Login() {
 					<p className="text-sm mt-6 text-gray-800">
 						Com o {process.env.NEXT_PUBLIC_APP_NAME} você pode controlar suas finanças de
 						forma simples e eficiente. Com ele você pode adicionar, editar e excluir
-						transações, categorias e contas e ter uma clara visão de como está sua
+						lançamentos, categorias e contas e ter uma clara visão de como está sua
 						situação financeira.
 					</p>
 					<p className="mt-5 text-sm font-light text-gray-500 dark:text-gray-400">

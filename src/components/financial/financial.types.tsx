@@ -4,9 +4,9 @@ import {
 	CircleDollarSign,
 	GraduationCap,
 	Heart,
+	PiggyBank,
 	ShoppingCart,
 	Smile,
-	Sun,
 } from 'lucide-react'
 
 export const AmountTypes = {
@@ -21,9 +21,9 @@ export const TransactionTypes = {
 		type: 'income',
 		label: 'Receita',
 		max: 100,
-		color: '#22c55e',
+		color: '#14532d',
 		icon: (className?: string) => (
-			<CircleDollarSign className={cn('w-6 h-6 text-blue-400', className)} />
+			<CircleDollarSign className={cn('w-6 h-6 text-green-900', className)} />
 		),
 
 		help: '',
@@ -32,9 +32,9 @@ export const TransactionTypes = {
 		type: 'expanses',
 		label: 'Necessidades essenciais',
 		max: 55,
-		color: '#60a5fa',
+		color: '#ff7827',
 		icon: (className?: string) => (
-			<ShoppingCart className={cn('w-6 h-6 text-blue-400', className)} />
+			<ShoppingCart className={cn('w-6 h-6 text-[#ff7827]', className)} />
 		),
 		help: 'Nesta categoria entram os gastos ESSENCIAIS para nossa vida, aqueles que realmente são básicos e suficientes para sobrevivermos. Ex.: contas de água, luz, telefone, impostos, aluguel, alimentação.',
 	},
@@ -42,9 +42,9 @@ export const TransactionTypes = {
 		type: 'expanses',
 		label: 'Tranquilidade financeira',
 		max: 10,
-		color: '#ca8a04',
+		color: '#3b82f6',
 		icon: (className?: string) => (
-			<Sun className={cn('w-6 h-6 text-yellow-400', className)} />
+			<PiggyBank className={cn('w-6 h-6 text-blue-500', className)} />
 		),
 		help: 'Nesta categoria o propósito é garantir a Tranquilidade Financeira no futuro. É como investir em si próprio. Dica da No Final das Contas: encare esta categoria como sendo uma OBRIGAÇÃO MENSAL.',
 	},
@@ -63,9 +63,9 @@ export const TransactionTypes = {
 		type: 'expanses',
 		label: 'Lazer',
 		max: 10,
-		color: '#f97316',
+		color: '#a855f7',
 		icon: (className?: string) => (
-			<Smile className={cn('w-6 h-6 text-orange-400', className)} />
+			<Smile className={cn('w-6 h-6 text-purple-500', className)} />
 		),
 		help: 'Se divertir também faz parte da vida, afinal!<br/>Uma boa celebração é fundamental para alimentarmos aquele sorriso no rosto e viver com mais leveza.',
 	},
@@ -73,9 +73,9 @@ export const TransactionTypes = {
 		type: 'expanses',
 		label: 'Compras de longo prazo',
 		max: 10,
-		color: '#2563eb',
+		color: '#fdba74',
 		icon: (className?: string) => (
-			<CalendarArrowUp className={cn('w-6 h-6 text-blue-400', className)} />
+			<CalendarArrowUp className={cn('w-6 h-6 text-orange-300', className)} />
 		),
 		help: 'Compras de Longo Prazo são aquelas que exigem planejamento.<br/>Troca de carro, compra de um imóvel, uma grande viagem. Aqui entram estes tipos de gastos que exigem um comprometimento considerável de nossas finanças.',
 	},

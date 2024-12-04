@@ -17,11 +17,11 @@ export const PendentExpansesCard = (props: PendentExpansesCardProps) => {
 
 	return (
 		<Card className="break-inside-avoid-column inline-block w-full my-4 mt-0 p-4">
-			<CardTitle>Transações pendentes</CardTitle>
+			<CardTitle>Lançamentos pendentes</CardTitle>
 			<CardContent className="px-0 py-4">
 				{pendentExpanses.length === 0 && (
 					<div className="text-center text-gray-500 mt-4">
-						Uau, nenhuma transação pendente
+						Uau, nenhum lançamento pendente
 					</div>
 				)}
 				{pendentExpanses.map((entry) => {

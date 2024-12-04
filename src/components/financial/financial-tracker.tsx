@@ -57,13 +57,13 @@ export function FinancialTracker(props: FinancialTrackerProps) {
 		<div className="max-w-2xl mx-auto p-4 space-y-6">
 			<Button className="w-full" onClick={() => setIsOpen(true)}>
 				<Plus className="w-4 h-4 mr-2" />
-				Adicionar transação
+				Adicionar lançamento
 			</Button>
 			<Dialog modal open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
 				<DialogContent>
 					<DialogHeader className="sr-only">
-						<DialogTitle>Adicionar transação</DialogTitle>
-						<DialogDescription>Adicione os dados da nova transação</DialogDescription>
+						<DialogTitle>Adicionar lançamento</DialogTitle>
+						<DialogDescription>Adicione os dados do novo lançamento</DialogDescription>
 					</DialogHeader>
 					<TransactionForm
 						handleClose={() => setIsOpen(false)}
@@ -74,7 +74,7 @@ export function FinancialTracker(props: FinancialTrackerProps) {
 			{groupedTransactions.length === 0 ? (
 				<Card>
 					<CardContent className="p-4 text-center text-muted-foreground">
-						Nenhuma transação encontrada
+						Ainda não há lançamentos para o mês
 					</CardContent>
 				</Card>
 			) : (
