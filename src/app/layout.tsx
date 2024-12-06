@@ -52,10 +52,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	return (
 		<html lang="en" className={inter.className}>
 			<head>
-				<meta name="application-name" content="FinnApp" />
+				<meta name="application-name" content="Amigo do Bolso" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-				<meta name="apple-mobile-web-app-title" content="FinnApp" />
+				<meta name="apple-mobile-web-app-title" content="Amigo do Bolso" />
 				<meta name="description" content="Aplicativo para controle de finanças" />
 				<meta name="format-detection" content="telephone=no" />
 				<meta name="mobile-web-app-capable" content="yes" />
