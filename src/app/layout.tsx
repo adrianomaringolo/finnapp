@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import { Toaster } from '@/components/ui/sonner'
 import { Montserrat } from 'next/font/google'
+import { Suspense } from 'react'
 import './globals.css'
 
 // If loading a variable font, you don't need to specify the font weight
@@ -80,7 +81,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			</head>
 
 			<body>
-				{children}
+				<Suspense>{children}</Suspense>
 				<Toaster richColors />
 			</body>
 		</html>
