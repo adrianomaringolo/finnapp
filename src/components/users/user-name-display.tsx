@@ -12,7 +12,7 @@ export const UserNameDisplay = ({ user }: { user: User }) => {
 		const getUserClaims = httpsCallable(functions, 'getUserClaims')
 
 		try {
-			getUserClaims({ uid: user.uid }).then((res) => {
+			getUserClaims({ uid: user.id }).then((res) => {
 				const data = res.data as { claims: Claims }
 				setClaims(data.claims)
 			})
@@ -23,7 +23,7 @@ export const UserNameDisplay = ({ user }: { user: User }) => {
 				console.error('Error fetching user claims:', error)
 			}
 		}
-	}, [functions, user.uid])
+	}, [functions, user.id])
 
 	const isAdmin = claims?.admin ?? false
 	console.log('claims', claims)
@@ -32,7 +32,7 @@ export const UserNameDisplay = ({ user }: { user: User }) => {
 		<div className="flex items-center">
 			<div className="flex flex-col">
 				<span>
-					{user.displayName}
+					{user.name}
 					{isAdmin && <span className="text-xs text-gray-400 ml-1">(Admin)</span>}
 				</span>
 				<span className="text-sm text-gray-500">{user.email}</span>
