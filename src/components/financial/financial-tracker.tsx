@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { useAuth } from '@/lib/context/AuthContext'
+import { useUser } from '@/lib/hooks/use-user'
 import { groupTransactionsByDate } from '@/lib/utils/groupTransactionsByDate'
 import { useGetEntries } from '@/services/entries/useGetEntries'
 import { DialogDescription } from '@radix-ui/react-dialog'
@@ -20,13 +20,13 @@ type FinancialTrackerProps = {
 }
 
 export function FinancialTracker(props: FinancialTrackerProps) {
-	const { user } = useAuth()
+	const { user } = useUser()
 
 	const searchParams = useSearchParams()
 	const [isOpen, setIsOpen] = useState(searchParams.get('m') === 'nova')
 
 	const { data: entries = [], isLoading } = useGetEntries({
-		userId: user?.uid as string,
+		userId: user?.id as string,
 		monthYear: props.monthYear,
 	})
 

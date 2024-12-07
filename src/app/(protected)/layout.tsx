@@ -2,7 +2,7 @@
 
 import { FooterComponent } from '@/components/navigation/footer'
 import { ResponsiveNav } from '@/components/navigation/responsive-nav'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	const queryClient = new QueryClient({

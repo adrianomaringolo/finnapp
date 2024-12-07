@@ -1,21 +1,15 @@
 'use client'
 
+import { GoogleLoginButton } from '@/components/access/google-login-button'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import {
-	getAuth,
-	getRedirectResult,
-	GoogleAuthProvider,
-	signInWithEmailAndPassword,
-	signInWithRedirect,
-} from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { FormEvent, useEffect, useState } from 'react'
-import { FcGoogle } from 'react-icons/fc'
+import { FormEvent, useState } from 'react'
 import { app } from '../../firebase'
 
 export default function Login() {
@@ -23,46 +17,6 @@ export default function Login() {
 	const [password, setPassword] = useState('')
 	const [error, setError] = useState('')
 	const router = useRouter()
-
-	const auth = getAuth()
-
-	const signWithGoogle = async () => {
-		setError('')
-
-		try {
-			const provider = new GoogleAuthProvider()
-			signInWithRedirect(auth, provider)
-		} catch (e) {
-			setError((e as Error).message)
-		}
-	}
-
-	const authResult = async () => {
-		try {
-			//setSignInLoading(true);
-			const user = await getRedirectResult(auth)
-			return user
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		} catch (error) {
-			return null
-		}
-	}
-
-	useEffect(() => {
-		authResult()
-			.then(async (res) => {
-				//setSignInLoading(false);
-				if (!res) {
-					return
-				}
-				debugger
-				console.log(res.user.uid)
-			})
-			.catch(() => {
-				return null
-			})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
 
 	// useEffect(() => {
 	// 	const handleAuthRedirect = async () => {
@@ -204,15 +158,7 @@ export default function Login() {
 					</div>
 
 					<div className="space-x-6 flex justify-center mt-8">
-						<Button
-							type="button"
-							variant="outline"
-							size="xl"
-							className="w-full text-sm"
-							onClick={signWithGoogle}
-						>
-							<FcGoogle size={40} /> Entrar com Google
-						</Button>
+						<GoogleLoginButton />
 					</div>
 				</form>
 			</div>

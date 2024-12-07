@@ -1,26 +1,30 @@
-import { db } from '@/firebase'
-import { useFirestoreDocumentDeletion } from '@react-query-firebase/firestore'
-import { doc } from 'firebase/firestore'
-import { useQueryClient } from 'react-query'
-
-const COLLECTION = 'entries'
+import { createClient } from '@/lib/supabase/client'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export interface DeleteEntryVariables {
 	userId: string
 	monthYear: string
-	entryId: string
+}
+
+const deleteEntry = async (entryId: string) => {
+	const supabase = createClient()
+
+	const { status } = await supabase.from('entries').delete().eq('id', entryId)
+	return status
 }
 
 export const useDeleteEntry = (variables: DeleteEntryVariables) => {
 	const queryClient = useQueryClient()
-	const entryDocRef = doc(db, 'users', variables.userId, COLLECTION, variables.entryId)
 
-	const firestoreMutationQuery = useFirestoreDocumentDeletion(entryDocRef, {
-		onSuccess() {
-			queryClient.invalidateQueries([
-				'entries',
-				{ userId: variables.userId, monthYear: variables.monthYear },
-			])
+	const firestoreMutationQuery = useMutation({
+		mutationFn: (entryId: string) => deleteEntry(entryId),
+		onSuccess: () => {
+			queryClient.refetchQueries({
+				queryKey: [
+					'entries',
+					{ userId: variables.userId, monthYear: variables.monthYear },
+				],
+			})
 		},
 	})
 

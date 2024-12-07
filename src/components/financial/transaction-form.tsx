@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/form'
 import { Switch } from '@/components/ui/switch'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { useAuth } from '@/lib/context/AuthContext'
+import { useUser } from '@/lib/hooks/use-user'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { formatCurrency } from '@/lib/utils'
 import { useAddEntry } from '@/services/entries/useAddEntry'
@@ -50,11 +50,11 @@ type TransactionFormProps = {
 
 export const TransactionForm = (props: TransactionFormProps) => {
 	const { monthYear, handleClose, transactionToEdit } = props
-	const { user } = useAuth()
+	const { user } = useUser()
 	const [formType, setFormType] = useState<AmountType>(AmountTypes.expanses as AmountType)
 
-	const addEntryMutation = useAddEntry({ userId: user?.uid as string, monthYear })
-	const editUpdateMutation = useUpdateEntry({ userId: user?.uid as string, monthYear })
+	const addEntryMutation = useAddEntry({ userId: user?.id as string, monthYear })
+	const editUpdateMutation = useUpdateEntry({ userId: user?.id as string, monthYear })
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -277,7 +277,7 @@ export const TransactionForm = (props: TransactionFormProps) => {
 								? 'bg-red-500 hover:bg-red-600'
 								: 'bg-blue-500 hover:bg-blue-600'
 						}`}
-						isLoading={addEntryMutation.isLoading || editUpdateMutation.isLoading}
+						isLoading={addEntryMutation.isPending || editUpdateMutation.isPending}
 					>
 						Salvar
 					</LoadButton>

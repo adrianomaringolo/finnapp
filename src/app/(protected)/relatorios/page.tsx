@@ -10,7 +10,7 @@ import { IncomeExpensesTotal } from '@/components/reports/income-expenses-total'
 import { MapsCategories } from '@/components/reports/maps-categories'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsTrigger } from '@/components/ui/tabs'
-import { useAuth } from '@/lib/context/AuthContext'
+import { useUser } from '@/lib/hooks/use-user'
 import { useGetEntries } from '@/services/entries/useGetEntries'
 import { TabsList } from '@radix-ui/react-tabs'
 import { Gauge, HandCoins } from 'lucide-react'
@@ -21,10 +21,10 @@ export default function Reports() {
 	const [currentMonth, setCurrentMonth] = useState<Month>(new Date().getMonth() as Month)
 	const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear())
 
-	const { user } = useAuth()
+	const { user } = useUser()
 
 	const { data: entries = [] } = useGetEntries({
-		userId: user?.uid as string,
+		userId: user?.id as string,
 		monthYear: `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}`,
 	})
 

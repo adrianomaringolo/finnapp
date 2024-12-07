@@ -24,10 +24,9 @@ import {
 	NavigationMenuList,
 } from '@/components/ui/navigation-menu'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { app } from '@/firebase'
-import { useAuth } from '@/lib/context/AuthContext'
+import { useUser } from '@/lib/hooks/use-user'
+import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils/cn'
-import { getAuth, signOut } from 'firebase/auth'
 import {
 	ChartPie,
 	DollarSign,
@@ -71,11 +70,12 @@ const NavLinks = ({
 
 export function ResponsiveNav() {
 	const router = useRouter()
+	const supabase = createClient()
 
 	const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false)
 
-	const { user } = useAuth()
-	const isAdmin = user?.customClaims.admin ?? false
+	const { user } = useUser()
+	const isAdmin = false
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
 	const navItems = [
@@ -85,12 +85,12 @@ export function ResponsiveNav() {
 	]
 
 	async function handleLogout() {
-		await signOut(getAuth(app))
-		await fetch('/api/logout')
+		await supabase.auth.signOut()
 		router.push('/login')
+		router.refresh()
 	}
 
-	const userNames = user?.displayName?.split(' ') ?? []
+	const userNames = user?.name?.split(' ') ?? []
 
 	const userInitials = `${userNames[0]?.[0]}${userNames[userNames.length - 1]?.[0]}`
 
@@ -155,7 +155,7 @@ export function ResponsiveNav() {
 							<DropdownMenuTrigger asChild>
 								<Button variant="ghost" className="relative h-8 w-8 rounded-full ">
 									<Avatar className="h-8 w-8">
-										<AvatarImage src={user?.photoURL ?? ''} alt="Foto de perfil" />
+										<AvatarImage src={user?.picture as string} alt="Foto de perfil" />
 										<AvatarFallback className="bg-income">{userInitials}</AvatarFallback>
 									</Avatar>
 								</Button>

@@ -9,7 +9,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { useAuth } from '@/lib/context/AuthContext'
+import { useUser } from '@/lib/hooks/use-user'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { useDeleteEntry } from '@/services/entries/useDeleteEntry'
 import { Trash2 } from 'lucide-react'
@@ -21,17 +21,16 @@ type TransactionItemRemoveProps = {
 }
 
 export const TransactionItemRemove = (props: TransactionItemRemoveProps) => {
-	const { user } = useAuth()
+	const { user } = useUser()
 	const { transaction } = props
 
 	const deleteMutation = useDeleteEntry({
-		userId: user?.uid as string,
+		userId: user?.id as string,
 		monthYear: transaction.monthYear,
-		entryId: transaction.id,
 	})
 
 	const onRemove = () => {
-		deleteMutation.mutateAsync().then(() => {
+		deleteMutation.mutateAsync(transaction.id).then(() => {
 			toast.success('Lançamento removido com sucesso')
 		})
 	}
@@ -42,7 +41,7 @@ export const TransactionItemRemove = (props: TransactionItemRemoveProps) => {
 				<LoadButton
 					variant="destructive"
 					className="my-1"
-					isLoading={deleteMutation.isLoading}
+					isLoading={deleteMutation.isPending}
 				>
 					<Trash2 className="w-4 h-4" />
 					Remover

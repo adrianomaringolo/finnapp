@@ -7,12 +7,12 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import { useAuth } from '@/lib/context/AuthContext'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { useUpdateEntry } from '@/services/entries/useUpdateEntry'
 import { BadgeAlert, BadgeCheck, Edit } from 'lucide-react'
 import { toast } from 'sonner'
 
+import { useUser } from '@/lib/hooks/use-user'
 import { formatDateAndWeekdayAndYear } from '@/lib/utils/date'
 import { useState } from 'react'
 import { TooltipMessage } from '../helpers/tooltip-message'
@@ -26,7 +26,7 @@ type TransactionItemProps = {
 }
 
 export const TransactionItem = (props: TransactionItemProps) => {
-	const { user } = useAuth()
+	const { user } = useUser()
 	const { transaction } = props
 
 	const [isDetailOpen, setIsDetailOpen] = useState(false)
@@ -37,7 +37,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 	const typeDefinition = TransactionTypes[category as keyof typeof TransactionTypes]
 
 	const updateEntryMutation = useUpdateEntry({
-		userId: user?.uid as string,
+		userId: user?.id as string,
 		monthYear: transaction.monthYear,
 	})
 

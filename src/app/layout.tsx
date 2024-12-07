@@ -1,12 +1,6 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import { Toaster } from '@/components/ui/sonner'
-import { clientConfig, serverConfig } from '@/config'
-import { User } from '@/lib/context/AuthContext'
-import { AuthProvider } from '@/lib/context/AuthProvider'
-import { getTokens, Tokens } from 'next-firebase-auth-edge'
-import { filterStandardClaims } from 'next-firebase-auth-edge/lib/auth/claims'
 import { Montserrat } from 'next/font/google'
-import { cookies } from 'next/headers'
 import './globals.css'
 
 // If loading a variable font, you don't need to specify the font weight
@@ -15,40 +9,7 @@ const inter = Montserrat({
 	display: 'swap',
 })
 
-const toUser = ({ decodedToken }: Tokens): User => {
-	const {
-		uid,
-		email,
-		picture: photoURL,
-		email_verified: emailVerified,
-		phone_number: phoneNumber,
-		name: displayName,
-		source_sign_in_provider: signInProvider,
-	} = decodedToken
-
-	const customClaims = filterStandardClaims(decodedToken)
-
-	return {
-		uid,
-		email: email ?? null,
-		displayName: displayName ?? null,
-		photoURL: photoURL ?? null,
-		phoneNumber: phoneNumber ?? null,
-		emailVerified: emailVerified ?? false,
-		providerId: signInProvider,
-		customClaims,
-	}
-}
-
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-	const tokens = await getTokens(await cookies(), {
-		apiKey: clientConfig.apiKey,
-		cookieName: serverConfig.cookieName,
-		cookieSignatureKeys: serverConfig.cookieSignatureKeys,
-		serviceAccount: serverConfig.serviceAccount,
-	})
-	const user = tokens ? toUser(tokens) : null
-
 	return (
 		<html lang="en" className={inter.className}>
 			<head>
@@ -119,7 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			</head>
 
 			<body>
-				<AuthProvider user={user}>{children}</AuthProvider>
+				{children}
 				<Toaster richColors />
 			</body>
 		</html>

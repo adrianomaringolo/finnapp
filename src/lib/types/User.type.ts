@@ -1,7 +1,8 @@
 export interface User {
-	uid: string
+	id: string
 	email: string
-	displayName: string
-	photoURL: string
+	name: string
+	picture: string
 	createdAt: string
+	lastSignInAt?: string
 }

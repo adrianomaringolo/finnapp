@@ -1,7 +1,7 @@
-import { db } from '@/firebase'
+import { createClient } from '@/lib/supabase/client'
 import { FinancialEntry } from '@/lib/types/Entry.type'
-import { addDoc, collection } from 'firebase/firestore'
-import { useMutation, useQueryClient } from 'react-query'
+import { objectToSnake } from '@/lib/utils/convertCase'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const COLLECTION = 'entries'
 
@@ -11,22 +11,23 @@ export interface AddEntryVariables {
 }
 
 const insertEntry = async (userId: string, entry: Partial<FinancialEntry>) => {
-	const entriesRef = collection(db, 'users', userId, COLLECTION)
-
-	const docRef = await addDoc(entriesRef, entry)
-
-	return docRef.id
+	const supabase = createClient()
+	const { data } = await supabase
+		.from('entries')
+		.insert(objectToSnake({ ...entry, user_id: userId }))
+		.select()
+	return data?.[0].id
 }
 
 export const useAddEntry = (variables: AddEntryVariables) => {
 	const queryClient = useQueryClient()
 
-	return useMutation(
-		(entry: Partial<FinancialEntry>) => insertEntry(variables.userId, entry),
-		{
-			onSuccess: () => {
-				queryClient.refetchQueries([COLLECTION, variables])
-			},
+	return useMutation({
+		mutationFn: (entry: Partial<FinancialEntry>) => insertEntry(variables.userId, entry),
+		onSuccess: () => {
+			queryClient.refetchQueries({
+				queryKey: [COLLECTION, variables],
+			})
 		},
-	)
+	})
 }

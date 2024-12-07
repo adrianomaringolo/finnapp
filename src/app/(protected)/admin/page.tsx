@@ -3,13 +3,13 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { UsersTable } from '@/components/users/users-table'
-import { useAuth } from '@/lib/context/AuthContext'
+import { useUser } from '@/lib/hooks/use-user'
 import { Lock } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 export default function AdminPanel() {
-	const { user } = useAuth()
-	const isAdmin = user?.customClaims.admin
+	const { user } = useUser()
+	const isAdmin = false
 
 	const router = useRouter()
 
