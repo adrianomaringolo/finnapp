@@ -1,5 +1,4 @@
 import { db } from '@/firebase'
-import { User } from '@/lib/types/User.type'
 import { useFirestoreDocumentData } from '@react-query-firebase/firestore'
 import { collection, doc } from 'firebase/firestore'
 
@@ -26,5 +25,5 @@ export const useGetList = (variables: GetUserVariables) => {
 		},
 	)
 
-	return { ...firestoreQuery, data: firestoreQuery.data as User }
+	return { ...firestoreQuery, data: firestoreQuery.data }
 }
