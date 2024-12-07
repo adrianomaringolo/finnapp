@@ -3,23 +3,21 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { UsersTable } from '@/components/users/users-table'
-import { useUser } from '@/lib/hooks/use-user'
 import { Lock } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 
 export default function AdminPanel() {
-	const { user } = useUser()
-	const isAdmin = false
+	// const { user } = useUser()
+	// const isAdmin = false
 
-	const router = useRouter()
+	// const router = useRouter()
 
-	if (!isAdmin) {
-		router.push('/')
-	}
+	// if (!isAdmin) {
+	// 	router.push('/')
+	// }
 
-	if (!user) {
-		return null
-	}
+	// if (!user) {
+	// 	return null
+	// }
 
 	return (
 		<section>
