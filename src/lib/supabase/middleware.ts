@@ -66,6 +66,7 @@ export async function updateSession(request: NextRequest) {
 
 	// redirect authenticated users from '/' to '/inicio'
 	if (user && request.nextUrl.pathname === '/') {
+		debugger
 		const url = request.nextUrl.clone()
 		url.pathname = '/inicio'
 		return NextResponse.redirect(url)

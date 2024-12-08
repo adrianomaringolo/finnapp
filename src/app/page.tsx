@@ -9,6 +9,7 @@ export default function Home() {
 	const { user } = useUser()
 
 	useEffect(() => {
+		debugger
 		if (user) {
 			router.push('/inicio')
 		}

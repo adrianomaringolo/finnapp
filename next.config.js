@@ -4,8 +4,4 @@ const withPWA = require('next-pwa')({
 	dest: 'public',
 })
 
-module.exports = withPWA({
-	experimental: {
-		missingSuspenseWithCSRBailout: false,
-	},
-})
+module.exports = withPWA({})

@@ -28,6 +28,8 @@ export function useUser() {
 				} = await supabase.auth.getSession()
 				if (error) throw error
 
+				debugger
+
 				if (session) {
 					const loggedUser = {
 						id: session.user.id,
