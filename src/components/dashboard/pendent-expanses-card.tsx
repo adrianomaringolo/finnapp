@@ -1,4 +1,5 @@
 import { FinancialEntry } from '@/lib/types/Entry.type'
+import { formatDateAndMonth } from '@/lib/utils/date'
 import { BadgeAlert, BadgeCheck } from 'lucide-react'
 import { AmountValue } from '../financial/amount-value'
 import { TransactionTypes } from '../financial/financial.types'
@@ -12,7 +13,7 @@ type PendentExpansesCardProps = {
 export const PendentExpansesCard = (props: PendentExpansesCardProps) => {
 	// filter the pendencies that are not complete and are in the past, sort by date
 	const pendentExpanses = props.entries
-		.filter((entry) => !entry.isCompleted && new Date(entry.date) < new Date())
+		.filter((entry) => !entry.isCompleted)
 		.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
 	return (
@@ -35,7 +36,10 @@ export const PendentExpansesCard = (props: PendentExpansesCardProps) => {
 									<div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
 										{typeDefinition?.icon()}
 									</div>
-									<span>{entry.description}</span>
+									<div>
+										<p>{entry.description}</p>
+										<p className="text-xs italic">{formatDateAndMonth(entry.date)}</p>
+									</div>
 								</div>
 								<div className="flex items-center gap-2">
 									<AmountValue value={entry.amount} />

@@ -15,8 +15,8 @@ const fetchEntries = async (userId: string, monthYear: string) => {
 		.from('entries')
 		.select()
 		.eq('user_id', userId)
-		.like('date', monthYear)
-		.order('created_at', { ascending: false })
+		.like('date', `${monthYear}%`)
+		.order('created_at', { ascending: true })
 
 	const { data, error } = await query
 
@@ -30,6 +30,7 @@ const fetchEntries = async (userId: string, monthYear: string) => {
 export const useGetEntries = (variables: GetEntriesVariables) => {
 	const query = useQuery({
 		queryKey: [COLLECTION, variables],
+		enabled: !!variables.userId,
 		queryFn: () => fetchEntries(variables.userId, variables.monthYear),
 	})
 	return { ...query, data: query.data }

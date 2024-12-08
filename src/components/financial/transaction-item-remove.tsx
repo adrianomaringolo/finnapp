@@ -24,9 +24,11 @@ export const TransactionItemRemove = (props: TransactionItemRemoveProps) => {
 	const { user } = useUser()
 	const { transaction } = props
 
+	const monthYear = transaction.date.split('-').slice(0, 2).join('-')
+
 	const deleteMutation = useDeleteEntry({
 		userId: user?.id as string,
-		monthYear: transaction.monthYear,
+		monthYear,
 	})
 
 	const onRemove = () => {

@@ -26,9 +26,8 @@ export function useUser() {
 					data: { session },
 					error,
 				} = await supabase.auth.getSession()
-				if (error) throw error
 
-				debugger
+				if (error) throw error
 
 				if (session) {
 					const loggedUser = {

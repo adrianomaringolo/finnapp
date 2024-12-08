@@ -82,7 +82,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 			<body>
 				<Suspense>{children}</Suspense>
-				<Toaster richColors />
+				<Toaster
+					toastOptions={{
+						classNames: {
+							error: 'bg-expense-foreground text-expense border-0',
+							success: 'bg-income-foreground text-income border-0',
+							warning: 'bg-yellow-200 text-yellow-800 border-0',
+							info: 'bg-blue-200 text-blue-800 border-0',
+						},
+					}}
+				/>
 			</body>
 		</html>
 	)

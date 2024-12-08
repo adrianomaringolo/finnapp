@@ -13,7 +13,7 @@ import { BadgeAlert, BadgeCheck, Edit } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { useUser } from '@/lib/hooks/use-user'
-import { formatDateAndWeekdayAndYear } from '@/lib/utils/date'
+import { formatDateAndWeekdayAndYear, getMonthYear } from '@/lib/utils/date'
 import { useState } from 'react'
 import { TooltipMessage } from '../helpers/tooltip-message'
 import { AmountValue } from './amount-value'
@@ -38,7 +38,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 
 	const updateEntryMutation = useUpdateEntry({
 		userId: user?.id as string,
-		monthYear: transaction.monthYear,
+		monthYear: getMonthYear(transaction.date),
 	})
 
 	const handleComplete = async () => {
@@ -46,7 +46,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 			...transaction,
 			isCompleted: !isCompleted,
 		})
-		toast.success('Lançamento atualizada com sucesso')
+		toast.success('Lançamento atualizado com sucesso')
 	}
 
 	const handleEdit = () => {
@@ -55,37 +55,37 @@ export const TransactionItem = (props: TransactionItemProps) => {
 
 	return (
 		<>
-			<div
-				className="flex items-center justify-between py-3 cursor-pointer"
-				onClick={() => setIsDetailOpen(true)}
-			>
-				<div className="flex items-center gap-4">
+			<div className="flex items-center justify-between py-3 cursor-pointer gap-3">
+				<div
+					className="flex items-center gap-4 flex-1"
+					onClick={() => setIsDetailOpen(true)}
+				>
 					<TooltipMessage message={typeDefinition.label}>
 						<div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
 							{typeDefinition?.icon()}
 						</div>
 					</TooltipMessage>
 					<span className="text-lg">{description}</span>
+					<div className="flex items-center gap-2 ml-auto">
+						<AmountValue value={amount} className="text-lg font-medium" />
+					</div>
 				</div>
-				<div className="flex items-center gap-2">
-					<AmountValue value={amount} className="text-lg font-medium" />
 
-					<TooltipMessage message={isCompleted ? 'Efetivada' : 'Pendente'}>
-						<button
-							onClick={(e) => {
-								e.preventDefault()
-								handleComplete()
-							}}
-							className="hover:border-gray-400 hover:bg-gray-50 p-1 rounded-full"
-						>
-							{isCompleted ? (
-								<BadgeCheck className="w-5 h-5 text-blue-500" />
-							) : (
-								<BadgeAlert className="w-5 h-5 text-gray-300" />
-							)}
-						</button>
-					</TooltipMessage>
-				</div>
+				<TooltipMessage message={isCompleted ? 'Efetivada' : 'Pendente'}>
+					<button
+						onClick={(e) => {
+							e.preventDefault()
+							handleComplete()
+						}}
+						className="hover:border-gray-400 hover:bg-gray-50 p-1 rounded-full"
+					>
+						{isCompleted ? (
+							<BadgeCheck className="w-6 h-6 text-blue-500" />
+						) : (
+							<BadgeAlert className="w-6 h-6 text-gray-300" />
+						)}
+					</button>
+				</TooltipMessage>
 			</div>
 			<Dialog open={isDetailOpen} onOpenChange={(open) => setIsDetailOpen(open)}>
 				<DialogContent>
@@ -125,7 +125,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 							setIsEditing(false)
 							setIsDetailOpen(false)
 						}}
-						monthYear={transaction.monthYear}
+						monthYear={getMonthYear(transaction.date)}
 						transactionToEdit={transaction}
 					/>
 				</DialogContent>

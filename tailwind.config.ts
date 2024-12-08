@@ -42,11 +42,11 @@ const config: Config = {
 				},
 				expense: {
 					DEFAULT: '#da5151',
-					foreground: '#da5151',
+					foreground: '#f1c2c2',
 				},
 				income: {
 					DEFAULT: '#295f9d',
-					foreground: '#295f9d',
+					foreground: '#c8e0fa',
 				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

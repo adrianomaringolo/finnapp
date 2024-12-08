@@ -1,8 +1,7 @@
 import { FinancialEntry } from '@/lib/types/Entry.type'
-import { BadgeAlert, BadgeCheck } from 'lucide-react'
+import { formatDateAndMonth } from '@/lib/utils/date'
 import { AmountValue } from '../financial/amount-value'
 import { TransactionTypes } from '../financial/financial.types'
-import { TooltipMessage } from '../helpers/tooltip-message'
 import { Card, CardContent, CardTitle } from '../ui/card'
 
 type TopExpansesCardProps = {
@@ -34,17 +33,13 @@ export const TopExpansesCard = (props: TopExpansesCardProps) => {
 									<div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
 										{typeDefinition?.icon()}
 									</div>
-									<span>{entry.description}</span>
+									<div>
+										<p>{entry.description}</p>
+										<p className="text-xs italic">{formatDateAndMonth(entry.date)}</p>
+									</div>
 								</div>
 								<div className="flex items-center gap-2">
 									<AmountValue value={entry.amount} />
-									<TooltipMessage message={entry.isCompleted ? 'Efetivada' : 'Pendente'}>
-										{entry.isCompleted ? (
-											<BadgeCheck className="w-5 h-5 text-blue-500" />
-										) : (
-											<BadgeAlert className="w-5 h-5 text-gray-300" />
-										)}
-									</TooltipMessage>
 								</div>
 							</div>
 						</div>

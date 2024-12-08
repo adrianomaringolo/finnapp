@@ -8,5 +8,4 @@ export interface FinancialEntry {
 	date: string
 	createdAt: string
 	category: string
-	monthYear: string
 }

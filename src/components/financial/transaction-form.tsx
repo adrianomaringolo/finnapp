@@ -31,13 +31,13 @@ import { AmountType, AmountTypes, TransactionTypes } from './financial.types'
 
 const formSchema = z.object({
 	type: z.enum([AmountTypes.expanses, AmountTypes.income]),
-	amount: z.string().min(1, 'Amount is required'),
-	description: z.string().min(1, 'Description is required'),
-	category: z.string().min(1, 'Category is required'),
+	amount: z.string().min(1, 'Preencha o valor'),
+	description: z.string().min(1, 'Preencha a descrição'),
+	category: z.string().min(1, 'Selecione a categoria'),
 	times: z.string().optional(),
 	notes: z.string().optional(),
 	date: z.date({
-		required_error: 'Please select a date',
+		required_error: 'Selecione uma data',
 	}),
 	completed: z.boolean().default(true),
 })
@@ -87,7 +87,6 @@ export const TransactionForm = (props: TransactionFormProps) => {
 			isCompleted: completed,
 			date: date.toISOString(),
 			createdAt: new Date().toISOString(),
-			monthYear: new Date(date).toISOString().slice(0, 7),
 		}
 
 		if (transactionToEdit) {
@@ -169,8 +168,8 @@ export const TransactionForm = (props: TransactionFormProps) => {
 					value={AmountTypes.expanses}
 					className={`transition-all ${
 						formType === AmountTypes.expanses
-							? '!bg-red-500 !text-white hover:!bg-red-600 flex-1'
-							: '!bg-red-100 !text-red-600 hover:!bg-red-200'
+							? '!bg-expense !text-white hover:!bg-expense/80 flex-1'
+							: '!bg-expense/30 !text-expense hover:!bg-expense/50'
 					}`}
 				>
 					Despesa
@@ -179,8 +178,8 @@ export const TransactionForm = (props: TransactionFormProps) => {
 					value={AmountTypes.income}
 					className={`transition-all ${
 						formType === AmountTypes.income
-							? '!bg-blue-500 !text-white hover:!bg-blue-600 flex-1'
-							: '!bg-blue-100 !text-blue-600 hover:!bg-blue-200'
+							? '!bg-income !text-white hover:!bg-income/80 flex-1'
+							: '!bg-income/30 !text-income hover:!bg-income/50'
 					}`}
 				>
 					Receita
@@ -274,8 +273,8 @@ export const TransactionForm = (props: TransactionFormProps) => {
 						size="xl"
 						className={`w-full ${
 							formType === AmountTypes.expanses
-								? 'bg-red-500 hover:bg-red-600'
-								: 'bg-blue-500 hover:bg-blue-600'
+								? 'bg-expense/90 hover:bg-expense'
+								: 'bg-income/90 hover:bg-income'
 						}`}
 						isLoading={addEntryMutation.isPending || editUpdateMutation.isPending}
 					>
