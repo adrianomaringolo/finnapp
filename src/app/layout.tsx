@@ -18,7 +18,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 				<meta name="apple-mobile-web-app-title" content="Amigo do Bolso" />
-				<meta name="description" content="Aplicativo para controle de finanças" />
+				<meta name="description" content="O amigo das suas finanças" />
 				<meta name="format-detection" content="telephone=no" />
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="msapplication-config" content="/icons/browserconfig.xml" />
@@ -48,14 +48,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				<meta name="twitter:card" content="summary" />
 				<meta name="twitter:url" content="https://yourdomain.com" />
 				<meta name="twitter:title" content="Amigo do Bolso" />
-				<meta name="twitter:description" content="Best PWA App in the world" />
+				<meta name="twitter:description" content="O amigo das suas finanças" />
 				<meta
 					name="twitter:image"
 					content="https://yourdomain.com/icons/android-chrome-192x192.png"
 				/>
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content="Amigo do Bolso" />
-				<meta property="og:description" content="Best PWA App in the world" />
+				<meta property="og:description" content="O amigo das suas finanças" />
 				<meta property="og:site_name" content="Amigo do Bolso" />
 				<meta property="og:url" content="https://yourdomain.com" />
 				<meta

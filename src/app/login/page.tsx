@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -161,7 +162,19 @@ export default function Login() {
 							</Button>
 						</div>
 
-						<div className="space-x-6 flex justify-center mt-8">
+						<div
+							className={cn(
+								'relative text-center my-6 text-sm text-gray-800',
+								'before:border-b before:w-[40%]',
+								'before:absolute before:left-0 before:top-1/2',
+								'after:border-b after:w-[40%]',
+								'after:absolute after:right-0 after:top-1/2',
+							)}
+						>
+							ou
+						</div>
+
+						<div className="space-x-6 flex justify-center">
 							<GoogleLoginButton />
 						</div>
 					</form>

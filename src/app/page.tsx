@@ -11,6 +11,8 @@ export default function Home() {
 	useEffect(() => {
 		if (user) {
 			router.push('/inicio')
+		} else {
+			router.push('/login')
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user])
