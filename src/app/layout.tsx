@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-page-custom-font */
+import { DialogProvider } from '@/components/dialog-context'
 import { Toaster } from '@/components/ui/sonner'
 import { Montserrat } from 'next/font/google'
 import { Suspense } from 'react'
@@ -81,8 +82,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			</head>
 
 			<body>
-				<Suspense>{children}</Suspense>
+				<DialogProvider>
+					<Suspense>{children}</Suspense>
+				</DialogProvider>
 				<Toaster
+					expand
 					toastOptions={{
 						classNames: {
 							error: 'bg-expense-foreground text-expense border-0',

@@ -23,6 +23,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useUser } from '@/lib/hooks/use-user'
+import { formatLongDate } from '@/lib/utils/date'
 import { useState } from 'react'
 
 export default function UserProfile() {
@@ -72,9 +73,7 @@ export default function UserProfile() {
 				{user?.createdAt && (
 					<div className="space-y-2">
 						<Label>Membro desde</Label>
-						<div className="font-medium">
-							{new Date(user?.createdAt).toLocaleDateString()}
-						</div>
+						<div className="font-medium">{formatLongDate(new Date(user?.createdAt))}</div>
 					</div>
 				)}
 			</CardContent>

@@ -1,17 +1,16 @@
 'use client'
 
 import { GoogleLoginButton } from '@/components/access/google-login-button'
+import { useDialog } from '@/components/dialog-context'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { createClient } from '@/lib/supabase/client'
+import { authErrors } from '@/lib/types/Auth.type'
 import { cn } from '@/lib/utils'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent, Suspense, useState } from 'react'
-import { app } from '../../firebase'
 
 export default function Login() {
 	const [email, setEmail] = useState('')
@@ -19,52 +18,29 @@ export default function Login() {
 	const [error, setError] = useState('')
 	const router = useRouter()
 
-	// useEffect(() => {
-	// 	const handleAuthRedirect = async () => {
-	// 		try {
-	// 			const result = await getRedirectResult(auth)
-	// 			debugger
-	// 			if (result) {
-	// 				const credential = GoogleAuthProvider.credentialFromResult(result)
-	// 				const user: User = result.user
-
-	// 				const idToken = await user.getIdToken()
-
-	// 				await fetch('/api/login', {
-	// 					headers: {
-	// 						Authorization: `Bearer ${idToken}`,
-	// 					},
-	// 				})
-
-	// 				router.push('/')
-	// 				console.log('User signed in via redirect:', user)
-	// 			}
-	// 		} catch (error) {
-	// 			console.error('Error handling redirect:', error)
-	// 		}
-	// 	}
-
-	// 	handleAuthRedirect()
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [])
+	const supabase = createClient()
+	const dialog = useDialog()
 
 	async function handleSubmit(event: FormEvent) {
 		event.preventDefault()
 		setError('')
 
-		try {
-			const credential = await signInWithEmailAndPassword(getAuth(app), email, password)
-			const idToken = await credential.user.getIdToken()
+		const response = await supabase.auth.signInWithPassword({
+			email,
+			password,
+		})
 
-			await fetch('/api/login', {
-				headers: {
-					Authorization: `Bearer ${idToken}`,
-				},
+		if (response.error) {
+			dialog.error({
+				title: 'Erro ao acessar sua conta',
+				message: authErrors[response.error.code as keyof typeof authErrors],
 			})
+			console.warn(response.error)
+			return
+		}
 
+		if (response.data.session) {
 			router.push('/')
-		} catch (e) {
-			setError((e as Error).message)
 		}
 	}
 
@@ -125,26 +101,6 @@ export default function Login() {
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
-
-							<div className="flex flex-wrap items-center justify-between gap-4">
-								<div className="flex items-center">
-									<Checkbox id="remember-me" name="remember-me" />
-									<Label
-										htmlFor="remember-me"
-										className="ml-3 block text-sm text-gray-800"
-									>
-										Lembre de mim
-									</Label>
-								</div>
-								<div className="text-sm">
-									<a
-										href="jajvascript:void(0);"
-										className="text-blue-600 hover:text-blue-500 font-semibold"
-									>
-										Esqueci minha senha
-									</a>
-								</div>
-							</div>
 						</div>
 
 						{error && (
@@ -156,10 +112,21 @@ export default function Login() {
 							</div>
 						)}
 
-						<div className="!mt-8">
+						<div className="!mt-4">
 							<Button type="submit" size="lg" className="w-full">
 								Entrar
 							</Button>
+						</div>
+
+						<div className="flex flex-wrap items-center justify-end gap-4 mt-4">
+							<div className="text-sm">
+								<Link
+									href="/recover"
+									className="text-blue-600 hover:text-blue-500 font-semibold"
+								>
+									Esqueci minha senha
+								</Link>
+							</div>
 						</div>
 
 						<div

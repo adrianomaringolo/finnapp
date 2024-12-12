@@ -1,14 +1,5 @@
 'use client'
 
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -41,6 +32,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useDialog } from '../dialog-context'
 
 const NavLinks = ({
 	navItems,
@@ -72,7 +64,7 @@ export function ResponsiveNav() {
 	const router = useRouter()
 	const supabase = createClient()
 
-	const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false)
+	const dialog = useDialog()
 
 	const { user } = useUser()
 	const isAdmin = false
@@ -84,10 +76,20 @@ export function ResponsiveNav() {
 		{ icon: HelpCircle, name: 'Como usar', href: '/ajuda' },
 	]
 
-	async function handleLogout() {
-		await supabase.auth.signOut()
-		router.push('/login')
-		router.refresh()
+	async function handleLogoutClick() {
+		dialog.confirm({
+			icon: LogOut,
+			title: 'Encerrar sessão',
+			message: 'Deseja realmente encerrar sua sessão?',
+			onConfirm: async () => {
+				await supabase.auth.signOut()
+				router.push('/login')
+				router.refresh()
+			},
+			displayCancel: true,
+			confirmLabel: 'Encerrar',
+			cancelLabel: 'Cancelar',
+		})
 	}
 
 	const userNames = user?.name?.split(' ') ?? []
@@ -175,7 +177,7 @@ export function ResponsiveNav() {
 										<span>Meu perfil</span>
 									</Link>
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={() => setIsLogoutConfirmOpen(true)}>
+								<DropdownMenuItem onClick={handleLogoutClick}>
 									<LogOut className="mr-2 h-4 w-4" />
 									<span>Encerrar</span>
 								</DropdownMenuItem>
@@ -184,20 +186,6 @@ export function ResponsiveNav() {
 					</div>
 				</div>
 			</header>
-
-			<AlertDialog open={isLogoutConfirmOpen} onOpenChange={setIsLogoutConfirmOpen}>
-				<AlertDialogContent>
-					<AlertDialogHeader>
-						<AlertDialogTitle>
-							Tem certeza que deseja encerrar sua sessão?
-						</AlertDialogTitle>
-					</AlertDialogHeader>
-					<AlertDialogFooter>
-						<AlertDialogCancel>Cancelar</AlertDialogCancel>
-						<AlertDialogAction onClick={handleLogout}>Encerrar</AlertDialogAction>
-					</AlertDialogFooter>
-				</AlertDialogContent>
-			</AlertDialog>
 		</>
 	)
 }

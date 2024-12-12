@@ -6,16 +6,16 @@ import { useEffect } from 'react'
 
 export default function Home() {
 	const router = useRouter()
-	const { user } = useUser()
+	const { session } = useUser()
 
 	useEffect(() => {
-		if (user) {
+		if (session) {
 			router.push('/inicio')
 		} else {
 			router.push('/login')
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user])
+	}, [session])
 
 	return <></>
 }

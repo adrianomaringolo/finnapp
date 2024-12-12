@@ -5,12 +5,31 @@ import { MonthSummaryCard } from '@/components/dashboard/month-summary-card'
 import { PendentExpansesCard } from '@/components/dashboard/pendent-expanses-card'
 import { ShortcutsCard } from '@/components/dashboard/shortcuts-card'
 import { TopExpansesCard } from '@/components/dashboard/top-expanses-card'
+import { useDialog } from '@/components/dialog-context'
 import { useUser } from '@/lib/hooks/use-user'
+import { authErrors } from '@/lib/types/Auth.type'
 import { formatDateAndWeekday } from '@/lib/utils/date'
 import { useGetEntries } from '@/services/entries/useGetEntries'
+import { useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 
-export default function Dashboard() {
+const Dashboard = () => {
 	const { user } = useUser()
+	const searchParams = useSearchParams()
+
+	const dialog = useDialog()
+
+	useEffect(() => {
+		const errorCode = searchParams.get('error_code')
+
+		if (errorCode) {
+			dialog.error({
+				title: 'Erro ao acessar sua conta',
+				message: authErrors[errorCode as keyof typeof authErrors],
+			})
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [searchParams])
 
 	const { data: entries = [] } = useGetEntries({
 		userId: user?.id as string,
@@ -34,3 +53,5 @@ export default function Dashboard() {
 		</section>
 	)
 }
+
+export default Dashboard

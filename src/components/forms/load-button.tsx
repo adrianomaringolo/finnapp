@@ -8,7 +8,7 @@ export interface LoadButtonProps extends ButtonProps {
 const LoadButton = React.forwardRef<HTMLButtonElement, LoadButtonProps>(
 	({ isLoading, ...props }, ref) => {
 		return (
-			<Button ref={ref} {...props} disabled={isLoading}>
+			<Button ref={ref} {...props} disabled={isLoading || props.disabled}>
 				{isLoading ? (
 					<svg
 						className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"

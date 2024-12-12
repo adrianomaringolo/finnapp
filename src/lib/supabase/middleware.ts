@@ -35,6 +35,8 @@ export async function updateSession(request: NextRequest) {
 		data: { user },
 	} = await supabase.auth.getUser()
 
+	console.log('user', user)
+
 	// Get the user's role using the custom getUserRole function
 	const role = await getUserRole()
 
