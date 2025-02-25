@@ -1,21 +1,31 @@
-import { FinancialEntry } from '@/lib/types/Entry.type'
+import { useUser } from '@/lib/hooks/use-user'
 import { formatCurrency } from '@/lib/utils'
+import { useGetEntries } from '@/services/entries/useGetEntries'
+import { Month, MonthNavigator } from 'buildgrid-ui'
+import { ptBR } from 'date-fns/locale'
+import { useState } from 'react'
 import { DangerGauge } from '../danger-gauge'
 import { AmountValue } from '../financial/amount-value'
 import { AmountTypes, TransactionTypes } from '../financial/financial.types'
 
-type MapsCategoriesProps = {
-	entries: FinancialEntry[]
-}
+export const MapsCategories = () => {
+	const [year, setYear] = useState(new Date().getFullYear())
+	const [month, setMonth] = useState(new Date().getMonth())
 
-export const MapsCategories = (props: MapsCategoriesProps) => {
+	const { user } = useUser()
+
+	const { data: entries = [] } = useGetEntries({
+		userId: user?.id as string,
+		monthYear: `${year}-${(month + 1).toString().padStart(2, '0')}`,
+	})
+
 	// sum incomes
-	const income = props.entries
+	const income = entries
 		.filter((entry) => entry.amount > 0)
 		.reduce((acc, entry) => acc + entry.amount, 1)
 
 	// for each categories, sum the total amount
-	const groupedEntries = props.entries.reduce(
+	const groupedEntries = entries.reduce(
 		(acc, entry) => {
 			const category = entry.category
 			const amount = entry.amount
@@ -32,7 +42,19 @@ export const MapsCategories = (props: MapsCategoriesProps) => {
 	)
 
 	return (
-		<div>
+		<section className="mt-4">
+			<div className="rounded-xl bg-gray-100 py-2 px-4 mb-4">
+				<MonthNavigator
+					locale={ptBR}
+					currentYear={year}
+					onChangeMonthYear={(month, year) => {
+						setMonth(month)
+						setYear(year)
+					}}
+					currentMonth={month as Month}
+				/>
+			</div>
+
 			{Object.entries(TransactionTypes).map(([key, value]) => {
 				if (value.type !== AmountTypes.expanses) return null
 				return (
@@ -56,6 +78,6 @@ export const MapsCategories = (props: MapsCategoriesProps) => {
 					</div>
 				)
 			})}
-		</div>
+		</section>
 	)
 }

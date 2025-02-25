@@ -33,6 +33,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useDialog } from '../dialog-context'
+import InstallPWAButton from '../install-pwa-button'
 
 const NavLinks = ({
 	navItems,
@@ -153,6 +154,7 @@ export function ResponsiveNav() {
 					</Sheet>
 
 					<div className="flex items-center ml-auto">
+						<InstallPWAButton />
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<Button variant="ghost" className="relative h-8 w-8 rounded-full ">

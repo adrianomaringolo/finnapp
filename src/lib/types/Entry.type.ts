@@ -9,3 +9,10 @@ export interface FinancialEntry {
 	createdAt: string
 	category: string
 }
+
+export interface MonthlyEntriesSum {
+	year: number
+	month: number
+	totalIncome: number
+	totalExpense: number
+}
