@@ -1,5 +1,6 @@
 'use client'
 
+import { CategoryAlertCard } from '@/components/dashboard/category-alert-card'
 import { ExpansesCategoryCard } from '@/components/dashboard/expanses-category-card'
 import { MonthSummaryCard } from '@/components/dashboard/month-summary-card'
 import { PendentExpansesCard } from '@/components/dashboard/pendent-expanses-card'
@@ -45,6 +46,7 @@ const Dashboard = () => {
 
 			<div className="gap-8 columns-1 md:columns-2">
 				<ShortcutsCard />
+				<CategoryAlertCard />
 				<MonthSummaryCard entries={entries} />
 				<ExpansesCategoryCard entries={entries} />
 				<TopExpansesCard entries={entries} />

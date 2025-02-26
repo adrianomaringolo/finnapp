@@ -15,6 +15,8 @@ const InstallPWAButton: React.FC = () => {
 
 	if (isInstalled || !isPromptReady) return null // Hide button if already installed
 
+	console.log(isInstalled, isPromptReady)
+
 	return (
 		<div className="flex flex-col items-center">
 			{isIOSDevice ? (
