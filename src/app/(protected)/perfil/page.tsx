@@ -11,7 +11,6 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
 	Card,
@@ -24,6 +23,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useUser } from '@/lib/hooks/use-user'
 import { formatLongDate } from '@/lib/utils/date'
+import { Avatar, AvatarFallback, AvatarImage } from 'buildgrid-ui'
 import { useState } from 'react'
 
 export default function UserProfile() {

@@ -1,10 +1,8 @@
 'use client'
 
 import { FinancialTracker } from '@/components/financial/financial-tracker'
-import {
-	Month,
-	MonthYearNavigatorComponent,
-} from '@/components/navigation/month-year-navigator'
+import { Month, MonthNavigator } from 'buildgrid-ui'
+import { ptBR } from 'date-fns/locale'
 import { useState } from 'react'
 
 export default function Entries() {
@@ -14,7 +12,8 @@ export default function Entries() {
 	return (
 		<section>
 			<div className="rounded-xl bg-gray-100 py-2 px-4">
-				<MonthYearNavigatorComponent
+				<MonthNavigator
+					locale={ptBR}
 					currentMonth={currentMonth}
 					currentYear={currentYear}
 					onChangeMonthYear={(month, year) => {

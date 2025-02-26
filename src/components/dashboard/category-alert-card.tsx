@@ -1,13 +1,14 @@
 'use client'
 
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { useUser } from '@/lib/hooks/use-user'
 import { useGetEntries } from '@/services/entries/useGetEntries'
-import { cn } from 'buildgrid-ui'
+import { Button, Card, CardContent, CardFooter, CardTitle, cn } from 'buildgrid-ui'
+import { useRouter } from 'next/navigation'
 import { AmountTypes, TransactionTypes } from '../financial/financial.types'
 
 export const CategoryAlertCard = () => {
 	const { user } = useUser()
+	const router = useRouter()
 
 	const { data: entries = [] } = useGetEntries({
 		userId: user?.id as string,
@@ -58,7 +59,7 @@ export const CategoryAlertCard = () => {
 
 	return (
 		<Card className="break-inside-avoid-column inline-block w-full my-4 p-4">
-			<CardTitle>Alertas de gastos</CardTitle>
+			<CardTitle className="border-b">Alertas de gastos</CardTitle>
 			<CardContent className="flex flex-col px-0 pt-2 gap-2">
 				{alerts.length === 0 && (
 					<div className="text-center text-gray-500 mt-4">Nenhum alerta de gastos</div>
@@ -88,6 +89,15 @@ export const CategoryAlertCard = () => {
 						)
 					})}
 			</CardContent>
+			<CardFooter className="p-0">
+				<Button
+					className="w-full"
+					variant="outline"
+					onClick={() => router.push('/relatorios?t=mapa')}
+				>
+					Ver mapa de categorias
+				</Button>
+			</CardFooter>
 		</Card>
 	)
 }
