@@ -1,15 +1,11 @@
 'use client'
 
-import { useDialog } from '@/components/dialog-context'
-import { LoadButton } from '@/components/forms/load-button'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { createClient } from '@/lib/supabase/client'
+import { Button, Input, toast, useDialog } from 'buildgrid-ui'
 import { MailCheck } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FormEvent, useState } from 'react'
-import { toast } from 'sonner'
 
 export default function Register() {
 	const [email, setEmail] = useState('')
@@ -74,7 +70,7 @@ export default function Register() {
 					</div>
 
 					<div className="!mt-12">
-						<LoadButton
+						<Button
 							size="lg"
 							type="submit"
 							className="w-full"
@@ -82,7 +78,7 @@ export default function Register() {
 							disabled={!email}
 						>
 							Enviar
-						</LoadButton>
+						</Button>
 					</div>
 				</form>
 				<Button variant="link" className="w-full" asChild>

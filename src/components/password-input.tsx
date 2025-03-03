@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Progress } from '@/components/ui/progress'
+import { Progress } from 'buildgrid-ui'
 import { Eye, EyeOff } from 'lucide-react'
 import React, { InputHTMLAttributes, useState } from 'react'
 

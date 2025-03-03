@@ -1,22 +1,24 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { useUser } from '@/lib/hooks/use-user'
+import { createClient } from '@/lib/supabase/client'
 import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
+	Button,
+	cn,
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import {
 	NavigationMenu,
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
-} from '@/components/ui/navigation-menu'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { useUser } from '@/lib/hooks/use-user'
-import { createClient } from '@/lib/supabase/client'
-import { Avatar, AvatarFallback, AvatarImage, cn } from 'buildgrid-ui'
+	useDialog,
+} from 'buildgrid-ui'
 import {
 	ChartPie,
 	DollarSign,
@@ -31,7 +33,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useDialog } from '../dialog-context'
 import InstallPWAButton from '../install-pwa-button'
 
 const NavLinks = ({
@@ -81,14 +82,17 @@ export function ResponsiveNav() {
 			icon: LogOut,
 			title: 'Encerrar sessão',
 			message: 'Deseja realmente encerrar sua sessão?',
-			onConfirm: async () => {
-				await supabase.auth.signOut()
-				router.push('/login')
-				router.refresh()
+			confirmButton: {
+				label: 'Encerrar',
+				onClick: async () => {
+					await supabase.auth.signOut()
+					router.push('/login')
+					router.refresh()
+				},
 			},
-			displayCancel: true,
-			confirmLabel: 'Encerrar',
-			cancelLabel: 'Cancelar',
+			cancelButton: {
+				label: 'Cancelar',
+			},
 		})
 	}
 

@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-page-custom-font */
-import { DialogProvider } from '@/components/dialog-context'
-import { Toaster } from '@/components/ui/sonner'
+
+import { PageContentArea } from '@/components/navigation/page-content-area'
 import { Montserrat } from 'next/font/google'
-import { Suspense } from 'react'
 import './globals.css'
 
 // If loading a variable font, you don't need to specify the font weight
@@ -62,20 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			</head>
 
 			<body>
-				<DialogProvider>
-					<Suspense>{children}</Suspense>
-				</DialogProvider>
-				<Toaster
-					expand
-					toastOptions={{
-						classNames: {
-							error: 'bg-expense-foreground text-expense border-0',
-							success: 'bg-income-foreground text-income border-0',
-							warning: 'bg-yellow-200 text-yellow-800 border-0',
-							info: 'bg-blue-200 text-blue-800 border-0',
-						},
-					}}
-				/>
+				<PageContentArea>{children}</PageContentArea>
 			</body>
 		</html>
 	)

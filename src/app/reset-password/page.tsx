@@ -1,17 +1,13 @@
 'use client'
 
-import { useDialog } from '@/components/dialog-context'
 import { LoadButton } from '@/components/forms/load-button'
-import { PasswordInputComponent } from '@/components/password-input'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { createClient } from '@/lib/supabase/client'
+import { Button, Input, PasswordInput, toast, useDialog } from 'buildgrid-ui'
 import { Key } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useEffect, useState } from 'react'
-import { toast } from 'sonner'
 
 export default function ResetPassword() {
 	const [email, setEmail] = useState('')
@@ -97,7 +93,7 @@ export default function ResetPassword() {
 
 						<div>
 							<label className="text-gray-800 text-sm mb-2 block">Senha</label>
-							<PasswordInputComponent
+							<PasswordInput
 								name="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}

@@ -1,10 +1,10 @@
 'use client'
 
-import { useDialog } from '@/components/dialog-context'
 import { FooterComponent } from '@/components/navigation/footer'
 import { ResponsiveNav } from '@/components/navigation/responsive-nav'
 import { createClient } from '@/lib/supabase/client'
 import { authErrors } from '@/lib/types/Auth.type'
+import { useDialog } from 'buildgrid-ui'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { FileKey, Loader, MailCheck } from 'lucide-react'

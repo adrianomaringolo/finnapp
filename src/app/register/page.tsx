@@ -1,26 +1,25 @@
 'use client'
 
-import { useDialog } from '@/components/dialog-context'
-import { LoadButton } from '@/components/forms/load-button'
-import { PasswordInputComponent } from '@/components/password-input'
 import { Terms } from '@/components/terms'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { createClient } from '@/lib/supabase/client'
 import {
+	Button,
+	Checkbox,
+	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { createClient } from '@/lib/supabase/client'
-import { Dialog } from '@radix-ui/react-dialog'
+	Input,
+	Label,
+	PasswordInput,
+	toast,
+	useDialog,
+} from 'buildgrid-ui'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
-import { toast } from 'sonner'
 
 export default function Register() {
 	const [email, setEmail] = useState('')
@@ -109,7 +108,7 @@ export default function Register() {
 
 						<div>
 							<label className="text-gray-800 text-sm mb-2 block">Senha</label>
-							<PasswordInputComponent
+							<PasswordInput
 								name="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
@@ -152,7 +151,7 @@ export default function Register() {
 					</div>
 
 					<div className="!mt-12">
-						<LoadButton
+						<Button
 							isLoading={isLoading}
 							size="lg"
 							type="submit"
@@ -160,7 +159,7 @@ export default function Register() {
 							disabled={!name || !email || !password || !agreement}
 						>
 							Registrar
-						</LoadButton>
+						</Button>
 					</div>
 				</form>
 				<Button variant="link" className="w-full" asChild>

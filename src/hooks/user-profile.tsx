@@ -18,8 +18,7 @@ import {
 	CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Avatar, AvatarFallback, AvatarImage } from 'buildgrid-ui'
+import { Avatar, AvatarFallback, AvatarImage, Label } from 'buildgrid-ui'
 import { useState } from 'react'
 
 export default function UserProfile({

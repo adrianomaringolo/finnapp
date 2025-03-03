@@ -1,12 +1,10 @@
 'use client'
 
 import { GoogleLoginButton } from '@/components/access/google-login-button'
-import { useDialog } from '@/components/dialog-context'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { createClient } from '@/lib/supabase/client'
 import { authErrors } from '@/lib/types/Auth.type'
 import { cn } from '@/lib/utils'
+import { Button, Input, useDialog } from 'buildgrid-ui'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
