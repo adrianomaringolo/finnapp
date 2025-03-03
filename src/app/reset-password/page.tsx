@@ -5,7 +5,6 @@ import { createClient } from '@/lib/supabase/client'
 import { Button, Input, PasswordInput, toast, useDialog } from 'buildgrid-ui'
 import { Key } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useEffect, useState } from 'react'
 
@@ -118,8 +117,8 @@ export default function ResetPassword() {
 						</LoadButton>
 					</div>
 				</form>
-				<Button variant="link" className="w-full" asChild>
-					<Link href="/login">Voltar para login</Link>
+				<Button variant="link" className="w-full" onClick={() => router.push('/login')}>
+					Voltar para login
 				</Button>
 			</div>
 		</main>

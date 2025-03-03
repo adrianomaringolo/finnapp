@@ -17,7 +17,6 @@ import {
 	useDialog,
 } from 'buildgrid-ui'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 
@@ -162,8 +161,8 @@ export default function Register() {
 						</Button>
 					</div>
 				</form>
-				<Button variant="link" className="w-full" asChild>
-					<Link href="/login">Voltar para login</Link>
+				<Button variant="link" className="w-full" onClick={() => router.push('/login')}>
+					Voltar para login
 				</Button>
 			</div>
 
