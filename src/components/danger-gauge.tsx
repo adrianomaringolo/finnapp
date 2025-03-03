@@ -1,7 +1,9 @@
 'use client'
 
+import { ReactNode } from 'react'
+
 type DangerGaugeProps = {
-	title: string | JSX.Element
+	title: string | ReactNode
 	value: number
 	maxValue: number
 }

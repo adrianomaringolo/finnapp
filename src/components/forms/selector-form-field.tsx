@@ -12,12 +12,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+import { ReactElement } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 type SelectorFormFieldProps = {
 	label?: string
 	name: string
-	options: { value: string; label: string | JSX.Element }[]
+	options: { value: string; label: string | ReactElement }[]
 }
 
 export const SelectorFormField = (props: SelectorFormFieldProps) => {

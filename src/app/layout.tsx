@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-page-custom-font */
-
 import { PageContentArea } from '@/components/navigation/page-content-area'
 import { Montserrat } from 'next/font/google'
 import './globals.css'

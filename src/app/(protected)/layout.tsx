@@ -49,10 +49,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 				icon: FileKey,
 				title: 'Erro ao acessar sua conta',
 				message: authErrors[errorCode as keyof typeof authErrors],
-				onConfirm: () => {
-					router.push('/login')
+				confirmButton: {
+					label: 'Ir para login',
+					onClick: () => {
+						router.push('/login')
+					},
 				},
-				confirmLabel: 'Ir para login',
 			})
 
 			return true
@@ -68,10 +70,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 				title: 'Sua conta foi verificada com sucesso 🎉',
 				message:
 					'Agora você já pode acessar sua conta e começar a controlar suas finanças.',
-				onConfirm: () => {
-					router.push('/inicio')
+				confirmButton: {
+					label: 'Ir para meu dashboard',
+					onClick: () => {
+						router.push('/inicio')
+					},
 				},
-				confirmLabel: 'Ir para meu dashboard',
 			})
 
 			return true

@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
@@ -144,7 +144,7 @@ export const TransactionForm = (props: TransactionFormProps) => {
 				}
 				return undefined
 			})
-			.filter(Boolean) as { value: string; label: string | JSX.Element }[]
+			.filter(Boolean) as { value: string; label: string | ReactElement }[]
 	}
 
 	const expensesCategories = getTypeCategories(AmountTypes.expanses as AmountType)

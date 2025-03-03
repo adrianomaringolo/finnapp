@@ -1,10 +1,6 @@
 'use client'
 
-import { CalendarIcon } from 'lucide-react'
-import { useFormContext } from 'react-hook-form'
-
 import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
 import {
 	FormControl,
 	FormField,
@@ -15,7 +11,10 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { formatLongDate } from '@/lib/utils/date'
+import { Calendar } from 'buildgrid-ui'
+import { CalendarIcon } from 'lucide-react'
 import { useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 
 type DateFormFieldProps = {
 	label?: string
@@ -50,13 +49,11 @@ export const DateFormField = (props: DateFormFieldProps) => {
 						</PopoverTrigger>
 						<PopoverContent className="w-auto p-0" align="center">
 							<Calendar
-								mode="single"
-								selected={field.value}
-								onSelect={(date) => {
+								selectedDate={field.value}
+								onChange={(date) => {
 									field.onChange(date)
 									setIsDatePickerOpen(false)
 								}}
-								initialFocus
 							/>
 						</PopoverContent>
 					</Popover>
