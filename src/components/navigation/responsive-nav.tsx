@@ -1,6 +1,5 @@
 'use client'
 
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { useUser } from '@/lib/hooks/use-user'
 import { createClient } from '@/lib/supabase/client'
 import {
@@ -17,6 +16,11 @@ import {
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
+	Sidebar,
+	SidebarHeader,
+	SidebarList,
+	SidebarListItem,
+	SidebarNav,
 	useDialog,
 } from 'buildgrid-ui'
 import {
@@ -38,11 +42,11 @@ import InstallPWAButton from '../install-pwa-button'
 const NavLinks = ({
 	navItems,
 }: {
-	navItems: Array<{ icon: LucideIcon; name: string; href: string }>
+	navItems: Array<{ icon: LucideIcon; label: string; href: string }>
 }) => (
 	<NavigationMenuList className="flex flex-col md:flex-row items-baseline">
-		{navItems.map(({ icon: Icon, name, href }) => (
-			<NavigationMenuItem key={name}>
+		{navItems.map(({ icon: Icon, label, href }) => (
+			<NavigationMenuItem key={label}>
 				<NavigationMenuLink asChild>
 					<Link
 						href={href}
@@ -53,7 +57,7 @@ const NavLinks = ({
 						)}
 					>
 						{Icon && <Icon className="h-5 w-5" />}
-						{name}
+						{label}
 					</Link>
 				</NavigationMenuLink>
 			</NavigationMenuItem>
@@ -72,9 +76,9 @@ export function ResponsiveNav() {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
 	const navItems = [
-		{ icon: DollarSign, name: 'Lançamentos', href: '/lancamentos' },
-		{ icon: ChartPie, name: 'Relatórios', href: '/relatorios' },
-		{ icon: HelpCircle, name: 'Como usar', href: '/ajuda' },
+		{ icon: DollarSign, label: 'Lançamentos', href: '/lancamentos' },
+		{ icon: ChartPie, label: 'Relatórios', href: '/relatorios' },
+		{ icon: HelpCircle, label: 'Como usar', href: '/ajuda' },
 	]
 
 	async function handleLogoutClick() {
@@ -100,6 +104,10 @@ export function ResponsiveNav() {
 
 	const userInitials = `${userNames[0]?.[0]}${userNames[userNames.length - 1]?.[0]}`
 
+	const handleNavItemClick = () => {
+		setIsMobileMenuOpen(false)
+	}
+
 	return (
 		<>
 			<header
@@ -123,38 +131,16 @@ export function ResponsiveNav() {
 						</NavigationMenu>
 					</div>
 
-					<Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-						<SheetTrigger asChild>
-							<Button
-								variant="ghost"
-								className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
-							>
-								<Menu className="h-5 w-5" />
-								<span className="sr-only">Toggle Menu</span>
-							</Button>
-						</SheetTrigger>
-						<SheetContent side="left" className="pr-0">
-							<Link
-								href="/"
-								className="flex items-center"
-								onClick={() => setIsMobileMenuOpen(false)}
-							>
-								<Link href="/" className="mr-6 flex items-center space-x-2">
-									<Image
-										src="/logo-letter-white.png"
-										alt="Logo Amigo do Bolso"
-										width={150}
-										height={100}
-									/>
-								</Link>
-							</Link>
-							<div className="my-4 h-[calc(100vh-8rem)] pb-10">
-								<NavigationMenu orientation="vertical">
-									<NavLinks navItems={navItems} />
-								</NavigationMenu>
-							</div>
-						</SheetContent>
-					</Sheet>
+					<div className="md:hidden">
+						<Button
+							onClick={() => setIsMobileMenuOpen(true)}
+							variant="ghost"
+							className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+						>
+							<Menu className="h-5 w-5" />
+							<span className="sr-only">Toggle Menu</span>
+						</Button>
+					</div>
 
 					<div className="flex items-center ml-auto gap-2">
 						<InstallPWAButton />
@@ -191,6 +177,43 @@ export function ResponsiveNav() {
 					</div>
 				</div>
 			</header>
+
+			<Sidebar
+				isOpen={isMobileMenuOpen}
+				onToggle={(open) => setIsMobileMenuOpen(open)}
+				fixed={false}
+				className="bg-[#383938]"
+			>
+				<SidebarHeader className="px-4 py-2 border-none">
+					<Link href="/" className="mr-6 flex items-center space-x-2">
+						<Image
+							src="/logo-letter-white.png"
+							alt="Logo Amigo do Bolso"
+							width={250}
+							height={150}
+						/>
+					</Link>
+				</SidebarHeader>
+				<SidebarNav className="flex flex-col">
+					<SidebarList className="gap-0 p-1">
+						{navItems.map((item) => (
+							<SidebarListItem
+								key={item.href}
+								onClick={handleNavItemClick}
+								className="p-0 text-white"
+							>
+								<Link
+									href={item.href}
+									className="flex items-center space-x-2 py-3 pl-4 w-full"
+								>
+									{item.icon && <item.icon className="h-5 w-5" />}
+									<span>{item.label}</span>
+								</Link>
+							</SidebarListItem>
+						))}
+					</SidebarList>
+				</SidebarNav>
+			</Sidebar>
 		</>
 	)
 }
