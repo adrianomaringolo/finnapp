@@ -55,7 +55,7 @@ export const CategoryAlertCard = () => {
 				icon: value.icon(),
 			}
 		})
-		.filter((alert) => alert && !isNaN(alert.percentage))
+		.filter((alert) => alert && !isNaN(alert.percentage) && alert.percentage !== Infinity)
 
 	return (
 		<Card className="break-inside-avoid-column inline-block w-full my-4 p-4">
@@ -66,6 +66,7 @@ export const CategoryAlertCard = () => {
 				) : (
 					alerts
 						.sort((a, b) => b!.percentage - a!.percentage)
+
 						.map((alert) => {
 							return (
 								<div className="mb-3" key={alert!.category}>
