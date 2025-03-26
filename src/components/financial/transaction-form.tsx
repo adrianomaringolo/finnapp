@@ -20,6 +20,7 @@ import { FinancialEntry } from '@/lib/types/Entry.type'
 import { formatCurrency } from '@/lib/utils'
 import { useAddEntry } from '@/services/entries/useAddEntry'
 import { useUpdateEntry } from '@/services/entries/useUpdateEntry'
+import { addMonths } from 'date-fns'
 import { toast } from 'sonner'
 import { CurrencyField } from '../forms/currency-field'
 import { DateFormField } from '../forms/date-form-field'
@@ -36,7 +37,7 @@ const formSchema = z.object({
 	category: z.string().min(1, 'Selecione a categoria'),
 	times: z.string().optional(),
 	notes: z.string().optional(),
-	date: z.date({
+	date: z.string({
 		required_error: 'Selecione uma data',
 	}),
 	completed: z.boolean().default(true),
@@ -48,10 +49,14 @@ type TransactionFormProps = {
 	handleClose: () => void
 }
 
+type TransactionFormValues = Omit<FinancialEntry, 'id'>
+
 export const TransactionForm = (props: TransactionFormProps) => {
 	const { monthYear, handleClose, transactionToEdit } = props
 	const { user } = useUser()
 	const [formType, setFormType] = useState<AmountType>(AmountTypes.expanses as AmountType)
+
+	const isEditing = !!transactionToEdit
 
 	const addEntryMutation = useAddEntry({ userId: user?.id as string, monthYear })
 	const editUpdateMutation = useUpdateEntry({ userId: user?.id as string, monthYear })
@@ -66,56 +71,56 @@ export const TransactionForm = (props: TransactionFormProps) => {
 			category: transactionToEdit?.category ?? '',
 			times: transactionToEdit?.times ?? '1',
 			notes: transactionToEdit?.notes ?? '',
-			date: transactionToEdit?.date ? new Date(transactionToEdit?.date) : new Date(),
+			date: transactionToEdit?.date
+				? new Date(transactionToEdit?.date).toISOString()
+				: new Date().toISOString(),
 			completed: transactionToEdit?.isCompleted ?? true,
 		},
 	})
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		const { amount, description, category, notes, date, completed } = values
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		const { amount, description, category, notes, date, completed, times } = values
 
 		const correctAmount =
 			formType === AmountTypes.expanses
 				? -Math.abs(parseFloat(amount))
 				: Math.abs(parseFloat(amount))
 
-		const newTransaction: Omit<FinancialEntry, 'id'> = {
+		const newTransaction: TransactionFormValues = {
 			amount: correctAmount,
 			description,
 			category,
 			notes,
+			times,
 			isCompleted: completed,
-			date: date.toISOString(),
+			date: new Date(date).toISOString(),
 			createdAt: new Date().toISOString(),
 		}
 
 		if (transactionToEdit) {
-			editUpdateMutation.mutate(
-				{ ...transactionToEdit, ...newTransaction },
-				{
-					onSuccess: () => {
-						toast.success('O lançamento foi atualizada com sucesso!')
-						handleClose()
-						form.reset()
-					},
-					onError: () => {
-						toast.error('Não foi possível atualizar o lançamento!')
-					},
-				},
-			)
-			return
+			await editUpdateMutation.mutateAsync({ ...transactionToEdit, ...newTransaction })
+			toast.success('O lançamento foi atualizada com sucesso!')
+			handleClose()
+			form.reset()
 		} else {
-			addEntryMutation.mutate(newTransaction, {
-				onSuccess: () => {
-					toast.success('O lançamento foi criada com sucesso!')
-					handleClose()
-					form.reset()
-				},
-				onError: () => {
-					toast.success('Não foi possível criar o lançamento!')
-				},
+			handleAddingTimes(newTransaction)
+		}
+	}
+
+	const handleAddingTimes = async (transaction: TransactionFormValues) => {
+		const times = parseInt(transaction.times ?? '1')
+
+		for (let i = 0; i < times; i++) {
+			await addEntryMutation.mutate({
+				...transaction,
+				date: addMonths(new Date(transaction.date), i).toISOString(),
+				description: `${transaction.description} (${i + 1}/${transaction.times})`,
 			})
 		}
+
+		toast.success('O lançamento foi criado com sucesso!')
+		handleClose()
+		form.reset()
 	}
 
 	const handleTypeChange = (value: string) => {
@@ -236,7 +241,7 @@ export const TransactionForm = (props: TransactionFormProps) => {
 						placeholder="Adicione observações se necessário"
 					/>
 
-					{formType === AmountTypes.expanses && (
+					{formType === AmountTypes.expanses && !isEditing && (
 						<>
 							<SelectorFormField
 								key={'times-' + formType}

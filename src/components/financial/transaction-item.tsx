@@ -11,7 +11,7 @@ import { useUser } from '@/lib/hooks/use-user'
 import { FinancialEntry } from '@/lib/types/Entry.type'
 import { formatDateAndWeekdayAndYear, getMonthYear } from '@/lib/utils/date'
 import { useUpdateEntry } from '@/services/entries/useUpdateEntry'
-import { BadgeAlert, BadgeCheck, Edit } from 'lucide-react'
+import { BadgeAlert, BadgeCheck, Edit, Repeat2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { TooltipMessage } from '../helpers/tooltip-message'
@@ -31,7 +31,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 	const [isDetailOpen, setIsDetailOpen] = useState(false)
 	const [isEditing, setIsEditing] = useState(false)
 
-	const { category, date, description, amount, isCompleted } = transaction
+	const { category, date, description, amount, isCompleted, times } = transaction
 
 	const typeDefinition = TransactionTypes[category as keyof typeof TransactionTypes]
 
@@ -65,6 +65,11 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						</div>
 					</TooltipMessage>
 					<span className="text-lg">{description}</span>
+					{times && parseInt(times) > 1 && (
+						<TooltipMessage message={`Parcelado em ${times} vezes`}>
+							<Repeat2 className="w-4 h-4 text-muted-foreground" />
+						</TooltipMessage>
+					)}
 					<div className="flex items-center gap-2 ml-auto">
 						<AmountValue value={amount} className="text-lg font-medium" />
 					</div>
@@ -94,13 +99,19 @@ export const TransactionItem = (props: TransactionItemProps) => {
 					</DialogHeader>
 					<div className="py-4">
 						<AmountValue value={amount} className="text-2xl font-semibold" />
+						{times && parseInt(times) > 1 && (
+							<div className="text-muted-foreground flex items-center gap-1 mb-4">
+								<Repeat2 className="w-4 h-4" />
+								Parcelado em {times} vezes de <AmountValue value={amount} />
+							</div>
+						)}
 
 						<div className="flex items-center gap-3">
 							<div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
 								{typeDefinition?.icon()}
 							</div>
 
-							{typeDefinition?.label}
+							<div>{typeDefinition?.label}</div>
 						</div>
 					</div>
 					<DialogFooter>

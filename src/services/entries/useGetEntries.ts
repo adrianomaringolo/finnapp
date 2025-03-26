@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
+import { FinancialEntry } from '@/lib/types/Entry.type'
 import { objectToCamel } from '@/lib/utils/convertCase'
 import { useQuery } from '@tanstack/react-query'
 
@@ -33,5 +34,5 @@ export const useGetEntries = (variables: GetEntriesVariables) => {
 		enabled: !!variables.userId,
 		queryFn: () => fetchEntries(variables.userId, variables.monthYear),
 	})
-	return { ...query, data: query.data }
+	return { ...query, data: query.data as FinancialEntry[] }
 }
